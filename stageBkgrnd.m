@@ -1,5 +1,6 @@
 %{
-last mod : Wednesday, December 1, 2021 3:40:45 PM
+last mod : Wednesday, December 1, 2021 3:49:47 PM
+
 %}
 
 clf  %This clears the figure, so remove this line if you want to preserve a plot you have already made
@@ -9,7 +10,7 @@ ha = axes('units','normalized', 'position',[0 0 1 1]);
 uistack(ha,'bottom');
 % Load in a background image and display it using the correct colors
 % The image used below, is just a Roadrunner scene I downloaded.
-I=imread('stage.jpg');
+I=imread('NinjaHome.jpg');
 hi = imagesc(I);
 colormap gray;
 % Turn the handlevisibility off so that we don't inadvertently plot into the axes again
