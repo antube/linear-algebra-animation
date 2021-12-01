@@ -1,3 +1,7 @@
+%{
+last mod : Wednesday, December 1, 2021 3:40:45 PM
+%}
+
 clf  %This clears the figure, so remove this line if you want to preserve a plot you have already made
 % This creates the 'background' axes
 ha = axes('units','normalized', 'position',[0 0 1 1]);
@@ -96,6 +100,33 @@ function PPshh = ShearHScene(PP,k)
     else ,
         PPshh = (SH*PPz) + center(1:2 , :); 
     end
+end
+
+
+
+function cent = centerPivot(PP)
+    % Assume these points are moved into a scene frame.
+    uX = max(PP(1,:));
+    lX = min(PP(1,:));
+    uY = max(PP(2,:));
+    lY = min(PP(2,:));
+    cent = [ mean([uX,lX])  ; mean([uY,lY]) ; 0];
+end
+
+
+
+function PPrs = RotationScene(PP,radAngle)
+    th=radAngle;
+    [Mrows Ncols] = size(PP);
+    if Mrows == 2 ,
+        R = [cos(th) -sin(th); sin(th) cos(th)];
+    else ,
+        R = [cos(th) -sin(th) 0; sin(th) cos(th) 0 ; 0 0 1];
+    end
+    center = centerPivot(PP);
+    PPz = ShiftScene(PP, -1.0*center(1,1), -1.0*center(2,1));
+    Prot = R*PPz;
+    PPrs = Prot + center;
 end
 
 
