@@ -19,7 +19,7 @@ set(ha,'handlevisibility','off', 'visible','off')
 % For example, we can put a plot in an axes
 %axes('position',[0.3,0.35,0.4,0.4])
 
-filename = 'NinjaSword1.jpg';
+filename = '"ninja character images"/NinjaSword1.jpg';
 ninjaColor =[0.15, 0.0, 0.30];
 thresh = 215;
 ninjasword1 = imread(filename);
