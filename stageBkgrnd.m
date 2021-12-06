@@ -1,5 +1,7 @@
 %{
-last mod : Wednesday, December 1, 2021 3:49:47 PM
+last mod: Monday, December 6, 2021 2:31:05 PM
+
+
 
 %}
 
@@ -37,7 +39,7 @@ ns1mtx_orig = ns1mtx;
 This "hb" thing is used for clipping the ninja to a specified axis 
 rectangle smaller than the background.
 If you don't wan't clipping, just make this box line up with the 
-background.   To see the box, change boxVisible='on';  
+background.   To see the box, change axesVisible='on';  
 %}
 axesVisible = 'off'; 
 axesXpos = 0.1;
