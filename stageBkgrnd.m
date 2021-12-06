@@ -44,8 +44,6 @@ axesYpos = 0.4;
 axesXdim = 0.625;
 axesYdim = 0.625; 
 
-%  Shear is working now. 
-ns1mtx = ShearHScene(ns1mtx,0.5);
 
 for ii=1:0.5:10
     %hb = axes('units','normalized', 'position',[0 0 1 1]);
@@ -74,8 +72,6 @@ disp('script completed');
 Functions below
 %}
 
-
-
 function fpiv = feetPivot(PP)
     % Get a pivot point at the feet of the character.
     uX = max(PP(1,:));
@@ -100,6 +96,33 @@ function PPshh = ShearHScene(PP,k)
     else ,
         PPshh = (SH*PPz) + center(1:2 , :); 
     end
+end
+
+
+
+function cent = centerPivot(PP)
+    % Assume these points are moved into a scene frame.
+    uX = max(PP(1,:));
+    lX = min(PP(1,:));
+    uY = max(PP(2,:));
+    lY = min(PP(2,:));
+    cent = [ mean([uX,lX])  ; mean([uY,lY]) ; 0];
+end
+
+
+
+function PPrs = RotationScene(PP,radAngle)
+    th=radAngle;
+    [Mrows Ncols] = size(PP);
+    if Mrows == 2 ,
+        R = [cos(th) -sin(th); sin(th) cos(th)];
+    else ,
+        R = [cos(th) -sin(th) 0; sin(th) cos(th) 0 ; 0 0 1];
+    end
+    center = centerPivot(PP);
+    PPz = ShiftScene(PP, -1.0*center(1,1), -1.0*center(2,1));
+    Prot = R*PPz;
+    PPrs = Prot + center;
 end
 
 
