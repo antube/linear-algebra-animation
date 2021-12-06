@@ -45,7 +45,7 @@ axesXdim = 0.625;
 axesYdim = 0.625; 
 
 
-for ii=1:0.5:10
+for ii=1:0.5:3
     %hb = axes('units','normalized', 'position',[0 0 1 1]);
     hb = axes('position',[axesXpos axesYpos axesXdim axesYdim]);
     h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
