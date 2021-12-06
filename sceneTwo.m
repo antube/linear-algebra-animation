@@ -39,7 +39,7 @@ rectangle smaller than the background.
 If you don't wan't clipping, just make this box line up with the 
 background.   To see the box, change axesVisible='on';  
 %}
-axesVisible = 'off'; 
+axesVisible = 'on'; 
 axesXpos = 0.1;
 axesYpos = 0.4;
 axesXdim = 0.625;
@@ -47,8 +47,8 @@ axesYdim = 0.625;
 
 
 for ii=1:0.5:3
-    %hb = axes('units','normalized', 'position',[0 0 1 1]);
-    hb = axes('position',[axesXpos axesYpos axesXdim axesYdim]);
+    hb = axes('units','normalized', 'position',[0.1 0.4 0.625 0.625]);
+    %hb = axes('position',[axesXpos axesYpos axesXdim axesYdim]);
     h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
     axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
@@ -64,8 +64,14 @@ for ii=1:0.5:3
     set( gca, 'color','none','handlevisibility','off','visible','off')
 end
 
+hb = axes('units','normalized', 'position',[0.1 0.4 0.625 0.625]);
+h_rr = plot(hb, [1] , [1] ,   'yo',  'MarkerSize', 5); 
+axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
+set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+Shift = [2.5*ii;ii]*ones(1,n);
+ns1mtx = ns1mtx + Shift;
+pause()
 
-h_rr = plot(hb,[3], [4] ,   'o', 'color', ninjaColor, 'MarkerSize', 3); 
 
 disp('script completed');
 
