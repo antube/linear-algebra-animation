@@ -1,3 +1,7 @@
+%  Test push into my own branch.   Monday, December 6, 2021 2:54:05 PM
+
+
+
 clf  %This clears the figure, so remove this line if you want to preserve a plot you have already made
 % This creates the 'background' axes
 ha = axes('units','normalized', 'position',[0 0 1 1]);
@@ -16,7 +20,7 @@ set(ha,'handlevisibility','off', 'visible','off')
 %axes('position',[0.3,0.35,0.4,0.4])
 
 filename = 'NinjaSword1.jpg';
-ninjaColor =[0.15, 0.0, 0.30];
+ninjaColor =[0.9, 0.9, 0.9];
 thresh = 215;
 ninjasword1 = imread(filename);
 ns1mtx = fJpeg2pointsConverter(ninjasword1, thresh);
@@ -32,7 +36,7 @@ ns1mtx_orig = ns1mtx;
 This "hb" thing is used for clipping the ninja to a specified axis 
 rectangle smaller than the background.
 If you don't wan't clipping, just make this box line up with the 
-background.   To see the box, change boxVisible='on';  
+background.   To see the box, change axesVisible='on';  
 %}
 axesVisible = 'off'; 
 axesXpos = 0.1;
