@@ -1,3 +1,10 @@
+%{
+last mod: Monday, December 6, 2021 2:31:05 PM
+
+
+
+%}
+
 clf  %This clears the figure, so remove this line if you want to preserve a plot you have already made
 % This creates the 'background' axes
 ha = axes('units','normalized', 'position',[0 0 1 1]);
@@ -5,7 +12,7 @@ ha = axes('units','normalized', 'position',[0 0 1 1]);
 uistack(ha,'bottom');
 % Load in a background image and display it using the correct colors
 % The image used below, is just a Roadrunner scene I downloaded.
-I=imread('stage.jpg');
+I=imread('NinjaHome.jpg');
 hi = imagesc(I);
 colormap gray;
 % Turn the handlevisibility off so that we don't inadvertently plot into the axes again
@@ -32,7 +39,7 @@ ns1mtx_orig = ns1mtx;
 This "hb" thing is used for clipping the ninja to a specified axis 
 rectangle smaller than the background.
 If you don't wan't clipping, just make this box line up with the 
-background.   To see the box, change boxVisible='on';  
+background.   To see the box, change axesVisible='on';  
 %}
 axesVisible = 'off'; 
 axesXpos = 0.1;
@@ -96,6 +103,33 @@ function PPshh = ShearHScene(PP,k)
     else ,
         PPshh = (SH*PPz) + center(1:2 , :); 
     end
+end
+
+
+
+function cent = centerPivot(PP)
+    % Assume these points are moved into a scene frame.
+    uX = max(PP(1,:));
+    lX = min(PP(1,:));
+    uY = max(PP(2,:));
+    lY = min(PP(2,:));
+    cent = [ mean([uX,lX])  ; mean([uY,lY]) ; 0];
+end
+
+
+
+function PPrs = RotationScene(PP,radAngle)
+    th=radAngle;
+    [Mrows Ncols] = size(PP);
+    if Mrows == 2 ,
+        R = [cos(th) -sin(th); sin(th) cos(th)];
+    else ,
+        R = [cos(th) -sin(th) 0; sin(th) cos(th) 0 ; 0 0 1];
+    end
+    center = centerPivot(PP);
+    PPz = ShiftScene(PP, -1.0*center(1,1), -1.0*center(2,1));
+    Prot = R*PPz;
+    PPrs = Prot + center;
 end
 
 
