@@ -1,45 +1,149 @@
-%{
- sceneTwo.m
-
-%}
-
-
+%load('Scene1.mat');
+%function [out_flag, PPout, x_final, y_final] = movePPandPassOnPPout(ns1mtx, x0, y0)
+%% Play background music throughout all scenes.
+% Time the animation and match the length of animation with length of audio
+[y,Fs] = audioread('ninja_music.wav');
+player = audioplayer(y,Fs);
+play(player)   % Start the player
+stop(player)   % Stop whenever you like...
 %% Create background image
-clf %
+clf %This clears the figure, so remove this line if you want to preserve a plot you have already made
+% This creates the 'background' axes
 ha = axes('units','normalized', 'position',[0 0 1 1]);
+% Move the background axes to the bottom
 uistack(ha,'bottom');
+% Load in a background image and display it using the correct colors
+% The image used below, is just a Roadrunner scene I downloaded.
 I=imread('NinjaHome.jpg');
 hi = imagesc(I);
 colormap gray;
+% Turn the handlevisibility off so that we don't inadvertently plot into the axes again
+% Also, make the axes invisible
 set(ha,'handlevisibility','off', 'visible','off')
+% Now we can use the figure, as required.
+% For example, we can put a plot in an axes
+%axes('position',[0.3,0.35,0.4,0.4])
+
 filename = 'NinjaSword1.jpg';
-ninjaColor =[1, 1, 1];
+ninjaColor =[0, 0, 1];
 thresh = 219;
 ninjasword1 = imread(filename);
 ns1mtx = fJpeg2pointsConverter(ninjasword1, thresh);
 [m,n]=size(ns1mtx);
 fprintf("%s size (thresh=%i) , [%i,%i]",filename,thresh,m,n);
 disp(m);  disp(n); 
-ns1mtx = [ns1mtx;ones(1,n)];
-S = [0.025 0 0; 0 0.025 0; 0 0 1];  %This is my rescaling matrix to shrink the character to fit the background
+ns1mtx = [ns1mtx;ones(1,n)]; %Make the matrix 3x3 by adding a row of 1s
+S = [0.02 0 0; 0 0.02 0; 0 0 1];  %This is my rescaling matrix to shrink the character to fit the background
 ns1mtx = S*ns1mtx;
 ns1mtx_orig = ns1mtx;
-%% Play background music throughout all scenes.
-% Time the animation and match the length of animation with length of audio
-% [y,Fs] = audioread('ninja_music.wav');
-% player = audioplayer(y,Fs);
-% play(player)   % Start the player
-% stop(player)   % Stop whenever you like...
+%% Notes from Stephen
 
 axesVisible = 'off'; 
 axesXpos = 0;
 axesYpos = 0;
-axesXdim = 1;
+axesXdim = 1.2;
 axesYdim = 1; 
 
+%% Run towards the edge of the building (using shear)
+ns1mtx = ShearHScene(ns1mtx,0.5);
+hb = axes('units','normalized', 'position',[-0.2 .0625 axesXdim 1]);
+r = 1/5;
+numItr = 17.5;
+for i=1:0.5:numItr
+    %hb = axes('position',[axesXpos axesYpos axesXdim axesYdim]);
+    h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
+    axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    
+    
+    Shift = [1 0 1; 0 1 0; 0 0 1];
+    ns1mtx = Shift*ns1mtx;
+    ns1mtx = RotationScene(ns1mtx,r);
+    r = -1*r;
+    
+    
+    pause(0.1)
+    set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
+    axis([0 70 0 70]) % This let me set the scale I wanted in the inserted axes
+    set( gca, 'color','none','handlevisibility','off','visible','off')
+end
+ns1mtx = RotationScene(ns1mtx,r);
+
+%% Reflect character and jump to left
+ns1mtx = ShearHScene(ns1mtx,-0.5);
+ns1mtx = ReflHScene(ns1mtx);
+hb = axes('units','normalized', 'position',[-0.2 .0625 axesXdim 1]);
+numItr = 12;
+for i=1:numItr
+    %hb = axes('position',[axesXpos axesYpos axesXdim axesYdim]);
+    h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
+    axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+
+    Shift = [1 0 -(6/numItr); 0 1 (6/numItr); 0 0 1];
+    ns1mtx = Shift*ns1mtx;
+    
+    pause(0.001)
+    set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
+    axis([0 70 0 70]) % This let me set the scale I wanted in the inserted axes
+    set( gca, 'color','none','handlevisibility','off','visible','off')
+end
+
+%% Character scales the building
+hb = axes('units','normalized', 'position',[-0.2 .0625 axesXdim 1]);
+r = 1/9;
+for i=1:9
+    %hb = axes('position',[axesXpos axesYpos axesXdim axesYdim]);
+    h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
+    axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible) 
+    
+    Shift = [1 0 0; 0 1 1; 0 0 1];
+    ns1mtx = Shift*ns1mtx;
+    ns1mtx = RotationScene(ns1mtx,r);
+    r = -1*r;
+    
+    pause(0.2)
+    set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
+    axis([0 70 0 70]) % This let me set the scale I wanted in the inserted axes
+    set( gca, 'color','none','handlevisibility','off','visible','off')
+end 
+ns1mtx = RotationScene(ns1mtx,r);
+
+%% Reflect character and jump to right (to reach roof)
+ns1mtx = ReflHScene(ns1mtx);
+hb = axes('units','normalized', 'position',[-0.2 .0625 axesXdim 1]);
+for i=1:numItr
+    %hb = axes('position',[axesXpos axesYpos axesXdim axesYdim]);
+    h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
+    axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    
+    Shift = [1 0 (5/numItr); 0 1 (5/numItr); 0 0 1];
+    ns1mtx = Shift*ns1mtx;
+    
+    pause(0.001);
+    set(h_rr,'Visible','off');  % This line erases the image of the Road Runner and Wile E. Coyote
+    axis([0 70 0 70]) ;% This let me set the scale I wanted in the inserted axes
+    set( gca, 'color','none','handlevisibility','off','visible','off');;
+end  
+
+characterCenter = centerPivot(ns1mtx);
+
+x_final = characterCenter(1,1);
+y_final = characterCenter(2,1);
+disp(x_final);
+disp(y_final);
 
 
-ns1mtx = teleportTo(ns1mtx,35,25);
+
+
+
+%{
+SCENE 2
+%}
+
+%ns1mtx = teleportTo(ns1mtx,35,25);
 
 %% Lands on to roof
 for i=1:5
@@ -48,7 +152,7 @@ for i=1:5
     axis([0 70 0 70]) ;
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     
-    nS = [1 0 0.5 ; 0 1 -0.4; 0 0 1 ];
+    nS = [1 0 0.5 ; 0 1 -0.1; 0 0 1 ];
     ns1mtx = nS*ns1mtx;
     
     pause(0.1);
@@ -79,14 +183,17 @@ end
 
 algn = alignWith(ns1mtx, ns1mtx_orig);
 ns1mtx = algn;
+
 for i=1:4
     hb = axes('units','normalized', 'position',[-0.2 .0625 1.2 1]);
     h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
     axis([0 70 0 70]) ;
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     
+    % sv + c
     nS = [1 0 0.5 ; 0 1 0; 0 0 1 ];
     ns1mtx = nS*ns1mtx;
+    
     
     pause(0.1);
     set(h_rr,'Visible','off');  
@@ -101,15 +208,17 @@ nt4mtx = [-1 ,0 0; 0 -1 0; 0 0 1]*nt4mtx;
 algn = alignWith(ns1mtx , nt4mtx);
 nt4mtx = algn;
 
-
+v=1;
 for i=1:40
     hb = axes('units','normalized', 'position',[-0.2 .0625 1.2 1]);
     h_rr = plot(hb,nt4mtx(1,:), nt4mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
     axis([0 70 0 70]) ;
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     
-    nS = [1 0 0.5 ; 0 1 0; 0 0 1 ];
-    nt4mtx = nS*nt4mtx;
+    % sv + c
+    nS = [1 0 0.5 ; 0 1 (-0.3)*v+1; 0 0 1 ];
+    ns1mtx = nS*ns1mtx;
+    v=v+1;
     
     pause(0.1);
     set(h_rr,'Visible','off');  
