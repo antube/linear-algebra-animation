@@ -9,6 +9,9 @@
 %       characterCenter: A vector representing the center of the charcter after the third scene is complete
 
 function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2] = third_scene(character, characterCenter, throwingStar1, throwingStar2, ninjaColor, axesVisible)
+    
+    disp(characterCenter);
+    
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Setup the nessecary matrices
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -121,14 +124,13 @@ end
 function [character, characterCenter] = transformAndAnimate(character, characterCenter, transformation, ninjaColor, axesVisible)
     % setup the plot for the animation frame
     hb = axes('units','normalized', 'position',[-0.2 .0625 1 1]);
-    disp(hb);
-    
-    %hb = axes('position',[axesXpos axesYpos axesXdim axesYdim]);
-    %h_rr = plot(hb,character(1,:), character(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1);
-    h_rr = plot(hb, 35, 35,   '*', 'color', ninjaColor, 'MarkerSize', 1); 
+    h_rr = plot(hb,character(1,:), character(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1);
+    %h_rr = plot(hb, 35, 35,   '*', 'color', ninjaColor, 'MarkerSize', 35); 
     axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     
+    disp(characterCenter);
+
     % perform the transformation
     character = transformation * character;
     characterCenter = centerPivot(character);

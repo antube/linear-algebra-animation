@@ -236,7 +236,9 @@ end
 %}
 
 % Call scene three function
-[ns1mtx, characterCenter, throwingStar1, throwingStar2] = third_scene(ns1mtx, [x_final, y_final], throwingStar1, throwingStar1, ninjaColor, axesVisible);
+disp(centerPivot(ns1mtx));
+
+[ns1mtx, characterCenter, throwingStar1, throwingStar2] = third_scene(ns1mtx, centerPivot(ns1mtx), throwingStar1, throwingStar1, ninjaColor, axesVisible);
 x_final = characterCenter(1,1);
 y_final = characterCenter(2,1);
 
