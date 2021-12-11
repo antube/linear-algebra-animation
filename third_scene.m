@@ -9,36 +9,47 @@
 %       characterCenter: A vector representing the center of the charcter after the third scene is complete
 
 function  [failureFlag, character, characterCenter] third_scene(character, characterCenter)
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Setup the nessecary matrices
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
     % no one else needs these throwing stars so I do not care if they are destroyed after third scene completion
     throwingStar1 = [];
+    throwingStar1Center = centerPivot(throwingStar1);
     throwingStar2 = [];
+    throwingStar2Center = centerPivot(throwingStar2);
+    starTemplate = [];
 
 
     % have the character fall into the scene
-    fallTransformation = [];
+    fallTransformation = [1 0 0; 0 1/4 0; 0 0 0];
 
 
     % landing matrices.
-    compressionTransformation = [];
+    compressionTransformation = [1 0 0; 0 1/32 0, 0 0 1];
     decompressionTransformation = inv(compressionTransformation);
 
 
     % This transformation matrix  is used to move the ninja stars across the scene
-    throwingTransformation = [];
+    throwingTransformation = [1/4 0 0; 0 1 0; 0 0 0];
 
 
-      % running transformation matrix
-      runningTransformation = [];
+    % running transformation matrix
+    runningTransformation = [1/4 0 0; 0 1 0; 0 0 0];
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Perform the Animation
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
     % character falls into scene from the previous building jump
     % character lands
     % character throws ninja star at target
-    % runs past target
+    % runs past target to the middle of the scene
     % throws ninja star at second target
 
     
-
+    % have the character fall into scene
     for j = 1:4
         [character, characterCenter] = transformAndAnimate(character, characterCenter, fallTransformation);
         pause(0.25);
@@ -59,18 +70,15 @@ function  [failureFlag, character, characterCenter] third_scene(character, chara
     end
 
 
-    
-
-
     %morph first ninja star from point to star
-    throwingStar1 = morph(throwingStar1, starTemplate);
+    %{throwingStar1 = morph(throwingStar1, starTemplate);
     
 
     % throw ninja star at first target
     for j = 1:4
-        [character, characterCenter] = transformAndAnimate(character, characterCenter, throwingTransformation);
+        [throwingStar1, throwingStar1Center] = transformAndAnimate(throwingStar1, throwingStar1Center, throwingTransformation);
         pause(0.25);
-    end
+    end %}
 
 
     % run to middle of scene
@@ -81,21 +89,13 @@ function  [failureFlag, character, characterCenter] third_scene(character, chara
 
 
     % morph second ninja star from point to star
-    throwingStar2 = morph(throwingStar2, starTemplate);
+    %{throwingStar2 = morph(throwingStar2, starTemplate);
 
     % throw ninja star at second target
     for j = 1:4
-        [character, characterCenter] = transformAndAnimate(character, characterCenter, throwingTransformation)
+        [throwingStar2, throwingStar2Center] = transformAndAnimate(throwingStar2, throwingStar2Center, throwingTransformation)
         pause(0.25);
-    end
-
-
-    % run to the middle of the image
-    for j = 1:4
-        [character, characterCenter] = transformAndAnimate(character, characterCenter, runningTransformation);
-        pause(0.25);
-    end
-
+    end%}
 
 
 
@@ -144,3 +144,4 @@ function [character, characterCenter] = transformAndAnimate(character, character
 
 function outputImage = morph(originalImage, templateImage)
     B2 = (1-j) * originalImage + templateImage;
+    
