@@ -37,6 +37,11 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
     % Perform the Animation
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+    hb = axes('units','normalized', 'position',[0.1 0.4 0.625 0.625]);
+    h_rr = plot(hb, [35] , [35] , 'yo', 'MarkerSize', 5);
+    axis([0 70 0 70])
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+
 
     % character falls into scene from the previous building jump
     % character lands
@@ -119,9 +124,8 @@ function [character, characterCenter] = transformAndAnimate(character, character
     disp(hb);
     
     %hb = axes('position',[axesXpos axesYpos axesXdim axesYdim]);
-    h_rr = plot(hb,character(1,:), character(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
-    disp(h_rr);
-
+    %h_rr = plot(hb,character(1,:), character(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1);
+    h_rr = plot(hb, 35, 35,   '*', 'color', ninjaColor, 'MarkerSize', 1); 
     axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     
