@@ -31,7 +31,7 @@ ns1mtx_orig = ns1mtx;
 % play(player)   % Start the player
 % stop(player)   % Stop whenever you like...
 
-axesVisible = 'on'; 
+axesVisible = 'off'; 
 axesXpos = 0;
 axesYpos = 0;
 axesXdim = 1;
