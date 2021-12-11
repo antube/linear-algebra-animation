@@ -116,8 +116,12 @@ end
 function [character, characterCenter] = transformAndAnimate(character, characterCenter, transformation, ninjaColor, axesVisible)
     % setup the plot for the animation frame
     hb = axes('units','normalized', 'position',[-0.2 .0625 1 1]);
+    disp(hb);
+    
     %hb = axes('position',[axesXpos axesYpos axesXdim axesYdim]);
     h_rr = plot(hb,character(1,:), character(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
+    disp(h_rr);
+
     axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     
