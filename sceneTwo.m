@@ -117,6 +117,15 @@ for i=1:40
     set( gca, 'color','none','handlevisibility','off','visible','off');
 end
 
+
+%setup throwing stars for scene three
+throwingStar1 = loadNinjaTool4("throwing-star.jpg");
+throwingStar2 = throwingStar1;
+
+% Call scene three function
+[] = third_scene([]);
+
+
 disp('script completed');
 
 %{
