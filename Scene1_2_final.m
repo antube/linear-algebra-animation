@@ -42,7 +42,6 @@ ns1mtx = [ns1mtx;ones(1,n)]; %Make the matrix 3x3 by adding a row of 1s
 S = [0.02 0 0; 0 0.02 0; 0 0 1];  %This is my rescaling matrix to shrink the character to fit the background
 ns1mtx = S*ns1mtx;
 ns1mtx_orig = ns1mtx;
-%% Notes from Stephen
 
 axesVisible = 'off'; 
 axesXpos = 0;
@@ -61,12 +60,10 @@ for i=1:0.5:numItr
     axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     
-    
     Shift = [1 0 1; 0 1 0; 0 0 1];
     ns1mtx = Shift*ns1mtx;
     ns1mtx = RotationScene(ns1mtx,r);
     r = -1*r;
-    
     
     pause(0.1)
     set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -134,12 +131,12 @@ for i=1:numItr
     set( gca, 'color','none','handlevisibility','off','visible','off');;
 end  
 
-characterCenter = centerPivot(ns1mtx);
+characterCenter1 = centerPivot(ns1mtx);
 
-x_final = characterCenter(1,1);
-y_final = characterCenter(2,1);
-disp(x_final);
-disp(y_final);
+x_final = characterCenter1(1,1);
+y_final = characterCenter1(2,1);
+fprintf("x_final = %f", x_final);
+fprintf("y_final = %f", y_final);
 
 %{
 SCENE 2
@@ -183,7 +180,8 @@ for i=1:28
     set( gca, 'color','none','handlevisibility','off','visible','off');
 end
 
-algn = alignWith(ns1mtx, ns1mtx_orig);
+%% Character stands up from sneak position
+algn = alignWith(ns1mtx, ns1mtx_orig); 
 ns1mtx = algn;
 
 for i=1:4
@@ -196,7 +194,6 @@ for i=1:4
     nS = [1 0 0.5 ; 0 1 0; 0 0 1 ];
     ns1mtx = nS*ns1mtx;
     
-    
     pause(0.05);
     set(h_rr,'Visible','off');  
     axis([0 70 0 70]) ;
@@ -206,10 +203,11 @@ end
 nt4mtx = loadNinjaTool4('NinjaTool4.jpg');
 Z = (-1)*centerPivot(nt4mtx);
 nt4mtx = ShiftScene(nt4mtx, Z(1),Z(2));
-nt4mtx = [-1 ,0 0; 0 -1 0; 0 0 1]*nt4mtx;
+nt4mtx = [-1 0 0; 0 -1 0; 0 0 1]*nt4mtx;
 algn = alignWith(ns1mtx , nt4mtx);
 nt4mtx = algn;
 
+%% Frontflip
 v=1;
 for i=1:19
     hb = axes('units','normalized', 'position',[-0.2 .0625 1.2 1]);
@@ -229,9 +227,9 @@ for i=1:19
     set( gca, 'color','none','handlevisibility','off','visible','off');
 end
 
+%% Lands and walks on roof
 algn = alignWith(nt4mtx , ns1mtx);
 ns1mtx = algn;
-
 for i=1:6
     hb = axes('units','normalized', 'position',[-0.2 .0625 1.2 1]);
     h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
@@ -247,6 +245,7 @@ for i=1:6
     set( gca, 'color','none','handlevisibility','off','visible','off');
 end
 
+%% Jumps off roof to the edge of the screen
 for i=1:5
     hb = axes('units','normalized', 'position',[-0.2 .0625 1.2 1]);
     h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
@@ -261,7 +260,14 @@ for i=1:5
     axis([0 70 0 70]) ;
     set( gca, 'color','none','handlevisibility','off','visible','off');
 end
-    
+
+characterCenter2 = centerPivot(ns1mtx);
+
+x_final = characterCenter2(1,1);
+y_final = characterCenter2(2,1);
+fprintf("x_final = %f", x_final);
+fprintf("y_final = %f", y_final);
+
 disp('script completed');
 
 %{
