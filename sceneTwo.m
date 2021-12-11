@@ -26,10 +26,10 @@ ns1mtx = S*ns1mtx;
 ns1mtx_orig = ns1mtx;
 %% Play background music throughout all scenes.
 % Time the animation and match the length of animation with length of audio
-[y,Fs] = audioread('ninja_music.wav');
-player = audioplayer(y,Fs);
-play(player)   % Start the player
-stop(player)   % Stop whenever you like...
+% [y,Fs] = audioread('ninja_music.wav');
+% player = audioplayer(y,Fs);
+% play(player)   % Start the player
+% stop(player)   % Stop whenever you like...
 
 axesVisible = 'on'; 
 axesXpos = 0;
@@ -39,13 +39,16 @@ axesYdim = 1;
 
 
 
+ns1mtx = teleportTo(ns1mtx,35,25);
+
+%% Lands on to roof
 for i=1:5
     hb = axes('units','normalized', 'position',[-0.2 .0625 1.2 1]);
     h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
     axis([0 70 0 70]) ;
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     
-    nS = [1 0 0.5 ; 0 1 -0.5; 0 0 1 ];
+    nS = [1 0 0.5 ; 0 1 -0.4; 0 0 1 ];
     ns1mtx = nS*ns1mtx;
     
     pause(0.1);
@@ -54,17 +57,67 @@ for i=1:5
     set( gca, 'color','none','handlevisibility','off','visible','off');
 end
 
+%% sneaks... 
+ns1mtx = squatScene(ns1mtx,1.8,0.6);
+r=-1;
+for i=1:28
+    hb = axes('units','normalized', 'position',[-0.2 .0625 1.2 1]);
+    h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
+    axis([0 70 0 70]) ;
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    
+    nS = [1 0 0.5 ; 0 1 0; 0 0 1 ];
+    ns1mtx = nS*ns1mtx;
+    ns1mtx = squatScene(ns1mtx, 1.0 + (0.2*r) , 1.0);
+    r=-1*r;
+    
+    pause(0.1);
+    set(h_rr,'Visible','off');  
+    axis([0 70 0 70]) ;
+    set( gca, 'color','none','handlevisibility','off','visible','off');
+end
 
-% button =1;
-% while sum(button) <= 3
-%     [mx,my,button] = ginput(3);
-%     disp(mx);
-%     disp(my);
-% end
+algn = alignWith(ns1mtx, ns1mtx_orig);
+ns1mtx = algn;
+for i=1:4
+    hb = axes('units','normalized', 'position',[-0.2 .0625 1.2 1]);
+    h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
+    axis([0 70 0 70]) ;
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    
+    nS = [1 0 0.5 ; 0 1 0; 0 0 1 ];
+    ns1mtx = nS*ns1mtx;
+    
+    pause(0.1);
+    set(h_rr,'Visible','off');  
+    axis([0 70 0 70]) ;
+    set( gca, 'color','none','handlevisibility','off','visible','off');
+end
 
+nt4mtx = loadNinjaTool4('NinjaTool4.jpg');
+Z = (-1)*centerPivot(nt4mtx);
+nt4mtx = ShiftScene(nt4mtx, Z(1),Z(2));
+nt4mtx = [-1 ,0 0; 0 -1 0; 0 0 1]*nt4mtx;
+algn = alignWith(ns1mtx , nt4mtx);
+nt4mtx = algn;
+
+
+for i=1:40
+    hb = axes('units','normalized', 'position',[-0.2 .0625 1.2 1]);
+    h_rr = plot(hb,nt4mtx(1,:), nt4mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
+    axis([0 70 0 70]) ;
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    
+    nS = [1 0 0.5 ; 0 1 0; 0 0 1 ];
+    nt4mtx = nS*nt4mtx;
+    
+    pause(0.1);
+    set(h_rr,'Visible','off');  
+    axis([0 70 0 70]) ;
+    set( gca, 'color','none','handlevisibility','off','visible','off');
+end
 
 disp('script completed');
-
 
 %{
 ----------------------------------------------------------
@@ -72,13 +125,48 @@ Functions below
 %}
 
 function PPt = teleportTo(PP,tx,ty)
-    nc = centerPivot(ns1mtx); 
+    nc = centerPivot(PP); 
     nP = [1 0 -1*nc(1) ; 0 1 -1*nc(2); 0 0 1 ];
-    ns1mtx = nP*ns1mtx;
+    zPP = nP*PP;
     nS = [1 0 tx ; 0 1 ty; 0 0 1 ];
-    ns1mtx = nS*ns1mtx;
+    PPt = nS*zPP;
 end
 
+function PPal = alignWith(PPprevmtx , newmtx )
+    [Mrows Ncols] = size(PPprevmtx);
+    center = feetPivot(newmtx);
+    newzzero = ShiftScene(newmtx, -1.0*center(1,1), -1.0*center(2,1));
+    prevc = feetPivot(PPprevmtx);
+    if Mrows == 3,PPal = newzzero + prevc;
+    else, PPal = newzzero + prevc(1:2 , :); 
+    end
+end
+
+
+function PPq = squatScene(PP, xq, yq )
+    [Mrows Ncols] = size(PP);
+    if Mrows == 2, SH = [xq 0 ; 0 yq];
+    else , SH = [xq 0 0; 0 yq 0; 0 0 1];
+    end
+    center = feetPivot(PP);
+    PPz = ShiftScene(PP, -1.0*center(1,1), -1.0*center(2,1));
+    if Mrows == 3,PPq = (SH*PPz) + center;
+    else, PPq = (SH*PPz) + center(1:2 , :); 
+    end
+end
+
+function nt4mtx = loadNinjaTool4(filename)
+    thresh = 219;
+    ninjatool4 = imread(filename);
+    nt4mtx = fJpeg2pointsConverter(ninjatool4, thresh);
+    [m,n]=size(nt4mtx);
+    fprintf("%s size (thresh=%i) , [%i,%i]",filename,thresh,m,n);
+    disp(m);  disp(n); 
+    nt4mtx = [nt4mtx;ones(1,n)];
+    %This is my rescaling matrix to shrink the character to fit the background
+    S = [0.025 0 0; 0 0.025 0; 0 0 1];  
+    nt4mtx = S*nt4mtx;
+end
 
 function fpiv = feetPivot(PP)
     % Get a pivot point at the feet of the character.
