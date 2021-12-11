@@ -167,3 +167,12 @@ function cent = centerPivot(PP)
     lY = min(PP(2,:));
     cent = [ mean([uX,lX])  ; mean([uY,lY]) ; 0];
 end
+
+
+function PPt = teleportTo(PP,tx,ty)
+    nc = centerPivot(PP); 
+    nP = [1 0 -1*nc(1) ; 0 1 -1*nc(2); 0 0 1 ];
+    zPP = nP*PP;
+    nS = [1 0 tx ; 0 1 ty; 0 0 1 ];
+    PPt = nS*zPP;
+end
