@@ -4,7 +4,7 @@ Saturday, December 11, 2021 2:33:27 PM
 
 %}
 
-%load('Scene1.mat');
+load('Scene1.mat');
 %function [out_flag, PPout, x_final, y_final] = movePPandPassOnPPout(ns1mtx, x0, y0)
 %% Play background music throughout all scenes.
 % Time the animation and match the length of animation with length of audio
@@ -141,10 +141,6 @@ y_final = characterCenter(2,1);
 disp(x_final);
 disp(y_final);
 
-
-
-
-
 %{
 SCENE 2
 %}
@@ -161,7 +157,7 @@ for i=1:5
     nS = [1 0 0.5 ; 0 1 -0.1; 0 0 1 ];
     ns1mtx = nS*ns1mtx;
     
-    pause(0.1);
+    pause(0.05);
     set(h_rr,'Visible','off');  
     axis([0 70 0 70]) ;
     set( gca, 'color','none','handlevisibility','off','visible','off');
@@ -181,7 +177,7 @@ for i=1:28
     ns1mtx = squatScene(ns1mtx, 1.0 + (0.2*r) , 1.0);
     r=-1*r;
     
-    pause(0.1);
+    pause(0.05);
     set(h_rr,'Visible','off');  
     axis([0 70 0 70]) ;
     set( gca, 'color','none','handlevisibility','off','visible','off');
@@ -201,7 +197,7 @@ for i=1:4
     ns1mtx = nS*ns1mtx;
     
     
-    pause(0.1);
+    pause(0.05);
     set(h_rr,'Visible','off');  
     axis([0 70 0 70]) ;
     set( gca, 'color','none','handlevisibility','off','visible','off');
@@ -222,21 +218,50 @@ for i=1:19
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     
     % sv + c
-    nS = [1 0 0.4 ; 0 1 (-0.3)*v+3; 0 0 1 ];
+    nS = [1 0 0.4 ; 0 1 (-0.28)*v+3; 0 0 1 ];
     nt4mtx = nS*nt4mtx;
-    nt4mtx = RotationScene(nt4mtx, -0.3 );
+    nt4mtx = RotationScene(nt4mtx, -0.66 );
     v=v+1;
     
-    pause(0.1);
+    pause(0.05);
     set(h_rr,'Visible','off');  
     axis([0 70 0 70]) ;
     set( gca, 'color','none','handlevisibility','off','visible','off');
 end
 
+algn = alignWith(nt4mtx , ns1mtx);
+ns1mtx = algn;
 
+for i=1:6
+    hb = axes('units','normalized', 'position',[-0.2 .0625 1.2 1]);
+    h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
+    axis([0 70 0 70]) ;
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    
+    nS = [1 0 0.5; 0 1 0; 0 0 1];
+    ns1mtx = nS*ns1mtx;
+    
+    pause(0.05);
+    set(h_rr,'Visible','off');  
+    axis([0 70 0 70]) ;
+    set( gca, 'color','none','handlevisibility','off','visible','off');
+end
 
-
-
+for i=1:5
+    hb = axes('units','normalized', 'position',[-0.2 .0625 1.2 1]);
+    h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
+    axis([0 70 0 70]) ;
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    
+    nS = [1 0 1.5 ; 0 1 1; 0 0 1 ];
+    ns1mtx = nS*ns1mtx;
+    
+    pause(0.05);
+    set(h_rr,'Visible','off');  
+    axis([0 70 0 70]) ;
+    set( gca, 'color','none','handlevisibility','off','visible','off');
+end
+    
 disp('script completed');
 
 %{
@@ -251,6 +276,7 @@ function PPt = teleportTo(PP,tx,ty)
     nS = [1 0 tx ; 0 1 ty; 0 0 1 ];
     PPt = nS*zPP;
 end
+
 
 function PPal = alignWith(PPprevmtx , newmtx )
     [Mrows Ncols] = size(PPprevmtx);
@@ -275,6 +301,7 @@ function PPq = squatScene(PP, xq, yq )
     end
 end
 
+
 function nt4mtx = loadNinjaTool4(filename)
     thresh = 219;
     ninjatool4 = imread(filename);
@@ -287,6 +314,7 @@ function nt4mtx = loadNinjaTool4(filename)
     S = [0.025 0 0; 0 0.025 0; 0 0 1];  
     nt4mtx = S*nt4mtx;
 end
+
 
 function fpiv = feetPivot(PP)
     % Get a pivot point at the feet of the character.
@@ -315,7 +343,6 @@ function PPshh = ShearHScene(PP,k)
 end
 
 
-
 function cent = centerPivot(PP)
     % Assume these points are moved into a scene frame.
     uX = max(PP(1,:));
@@ -324,7 +351,6 @@ function cent = centerPivot(PP)
     lY = min(PP(2,:));
     cent = [ mean([uX,lX])  ; mean([uY,lY]) ; 0];
 end
-
 
 
 function PPrs = RotationScene(PP,radAngle)
@@ -375,6 +401,7 @@ function PPrefl = ReflHScene(PP)
     end
 end
 
+
 function PPout = fJpeg2pointsConverter(BB,THRESHOLD)
     BB1=BB(:,:,1);
     [M, N]= size(BB1);
@@ -393,5 +420,3 @@ function PPout = fJpeg2pointsConverter(BB,THRESHOLD)
     end
     PPout = PP(:,1:cnt);
 end
-
-
