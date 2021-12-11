@@ -4,7 +4,7 @@ Saturday, December 11, 2021 2:33:27 PM
 
 %}
 
-load('Scene1.mat');
+%load('Scene1.mat');
 %function [out_flag, PPout, x_final, y_final] = movePPandPassOnPPout(ns1mtx, x0, y0)
 %% Play background music throughout all scenes.
 % Time the animation and match the length of animation with length of audio
