@@ -8,23 +8,21 @@
 %       failureFlag: A flag which when set will indicate the running of the method failed
 %       characterCenter: A vector representing the center of the charcter after the third scene is complete
 
-function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2] third_scene(character, characterCenter, throwingStar1, throwingStar2)
+function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2] = third_scene(character, characterCenter, throwingStar1, throwingStar2, ninjaColor, axesVisible)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Setup the nessecary matrices
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % I need a centerpivot to call the transform and animate function
-    throwingStar1Center = centerPivot(throwingStar1);
-    throwingStar2Center = centerPivot(throwingStar2);
+    throwingStarCenter = centerPivot(throwingStar1);
     starTemplate = [];
 
 
     % have the character fall into the scene
     fallTransformation = [1 0 0; 0 1/4 0; 0 0 0];
 
-
     % landing matrices.
-    compressionTransformation = [1 0 0; 0 1/32 0, 0 0 1];
+    compressionTransformation = [1 0 0; 0 1/32 0; 0 0 1];
     decompressionTransformation = inv(compressionTransformation);
 
 
@@ -49,7 +47,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
     
     % have the character fall into scene
     for j = 1:4
-        [character, characterCenter] = transformAndAnimate(character, characterCenter, fallTransformation);
+        [character, characterCenter] = transformAndAnimate(character, characterCenter, fallTransformation, ninjaColor, axesVisible);
         pause(0.25);
     end
 
@@ -57,48 +55,52 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
 
     % upon landing compress the character slightly to mimick a energy capture after landing
     for j = 1:4
-        [character, characterCenter] = transformAndAnimate(character, characterCenter, compressionTransformation);
+        [character, characterCenter] = transformAndAnimate(character, characterCenter, fallTransformation, ninjaColor, axesVisible);
         pause(0.25);
     end
 
     % decompress to stand back up 
     for j = 1:4
-        [character, characterCenter] = transformAndAnimate(charcter, characterCenter, decompressionTransformation);
+        [character, characterCenter] = transformAndAnimate(character, characterCenter, fallTransformation, ninjaColor, axesVisible);
         pause(0.25);
     end
 
 
     %morph first ninja star from point to star
-    %{throwingStar1 = morph(throwingStar1, starTemplate);
+    %{
+    throwingStar1 = morph(throwingStar1, starTemplate);
     
 
     % throw ninja star at first target
     for j = 1:4
         [throwingStar1, throwingStar1Center] = transformAndAnimate(throwingStar1, throwingStar1Center, throwingTransformation);
         pause(0.25);
-    end %}
+    end
+    %}
 
 
     % run to middle of scene
     for j = 1:4
-        [character, characterCenter] = transformAndAnimate(character, characterCenter, runningTransformation);
+        [character, characterCenter] = transformAndAnimate(character, characterCenter, fallTransformation, ninjaColor, axesVisible);
         pause(0.25);
     end
 
 
     % morph second ninja star from point to star
-    %{throwingStar2 = morph(throwingStar2, starTemplate);
+    %{
+    throwingStar2 = morph(throwingStar2, starTemplate);
 
     % throw ninja star at second target
     for j = 1:4
         [throwingStar2, throwingStar2Center] = transformAndAnimate(throwingStar2, throwingStar2Center, throwingTransformation)
         pause(0.25);
-    end%}
+    end
+    %}
 
 
-
+    failureFlag = false;
     characterCenter = centerPivot(character);
-
+end
 
 
 % this function takes care of the drawing and the transforming
@@ -111,11 +113,11 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
 %               character       : the character matrix after the transformation
 %               characterCenter : the center of the character after the transformation
 
-function [character, characterCenter] = transformAndAnimate(character, characterCenter, transformation)
+function [character, characterCenter] = transformAndAnimate(character, characterCenter, transformation, ninjaColor, axesVisible)
     % setup the plot for the animation frame
     hb = axes('units','normalized', 'position',[-0.2 .0625 1 1]);
     %hb = axes('position',[axesXpos axesYpos axesXdim axesYdim]);
-    h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
+    h_rr = plot(hb,character(1,:), character(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
     axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     
@@ -128,7 +130,7 @@ function [character, characterCenter] = transformAndAnimate(character, character
     set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
     axis([0 70 0 70]) % This let me set the scale I wanted in the inserted axes
     set( gca, 'color','none','handlevisibility','off','visible','off')
-    
+end
 
 
 % This function takes a character and morphs into a different shape specified by the caller
@@ -142,4 +144,16 @@ function [character, characterCenter] = transformAndAnimate(character, character
 
 function outputImage = morph(originalImage, templateImage)
     B2 = (1-j) * originalImage + templateImage;
-    
+
+end
+
+
+
+function cent = centerPivot(PP)
+    % Assume these points are moved into a scene frame.
+    uX = max(PP(1,:));
+    lX = min(PP(1,:));
+    uY = max(PP(2,:));
+    lY = min(PP(2,:));
+    cent = [ mean([uX,lX])  ; mean([uY,lY]) ; 0];
+end

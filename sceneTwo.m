@@ -29,6 +29,8 @@ ninjaColor =[0, 0, 1];
 thresh = 219;
 ninjasword1 = imread(filename);
 ns1mtx = fJpeg2pointsConverter(ninjasword1, thresh);
+throwingStar = imread("throwing-star.jpg");
+throwingStar1 = fJpeg2pointsConverter(throwingStar, thresh);
 [m,n]=size(ns1mtx);
 fprintf("%s size (thresh=%i) , [%i,%i]",filename,thresh,m,n);
 disp(m);  disp(n); 
@@ -227,12 +229,16 @@ for i=1:40
 end
 
 
-%setup throwing stars for scene three
-throwingStar1 = loadNinjaTool4("throwing-star.jpg");
-throwingStar2 = throwingStar1;
+
+
+%{
+    Scene three    
+%}
 
 % Call scene three function
-[] = third_scene([]);
+[ns1mtx, characterCenter, throwingStar1, throwingStar2] = third_scene(ns1mtx, [x_final, y_final], throwingStar1, throwingStar1, ninjaColor, axesVisible);
+x_final = characterCenter(1,1);
+y_final = characterCenter(2,1);
 
 
 disp('script completed');
