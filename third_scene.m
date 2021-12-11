@@ -8,15 +8,13 @@
 %       failureFlag: A flag which when set will indicate the running of the method failed
 %       characterCenter: A vector representing the center of the charcter after the third scene is complete
 
-function  [failureFlag, character, characterCenter] third_scene(character, characterCenter)
+function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2] third_scene(character, characterCenter, throwingStar1, throwingStar2)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Setup the nessecary matrices
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % no one else needs these throwing stars so I do not care if they are destroyed after third scene completion
-    throwingStar1 = [];
+    % I need a centerpivot to call the transform and animate function
     throwingStar1Center = centerPivot(throwingStar1);
-    throwingStar2 = [];
     throwingStar2Center = centerPivot(throwingStar2);
     starTemplate = [];
 
@@ -35,7 +33,7 @@ function  [failureFlag, character, characterCenter] third_scene(character, chara
 
 
     % running transformation matrix
-    runningTransformation = [1/4 0 0; 0 1 0; 0 0 0];
+    runningTransformation = [-1/4 0 0; 0 1 0; 0 0 0];
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Perform the Animation
