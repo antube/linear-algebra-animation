@@ -1,3 +1,9 @@
+%{
+ 
+Saturday, December 11, 2021 2:33:27 PM
+
+%}
+
 %load('Scene1.mat');
 %function [out_flag, PPout, x_final, y_final] = movePPandPassOnPPout(ns1mtx, x0, y0)
 %% Play background music throughout all scenes.
@@ -209,15 +215,16 @@ algn = alignWith(ns1mtx , nt4mtx);
 nt4mtx = algn;
 
 v=1;
-for i=1:40
+for i=1:19
     hb = axes('units','normalized', 'position',[-0.2 .0625 1.2 1]);
     h_rr = plot(hb,nt4mtx(1,:), nt4mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
     axis([0 70 0 70]) ;
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     
     % sv + c
-    nS = [1 0 0.5 ; 0 1 (-0.3)*v+1; 0 0 1 ];
-    ns1mtx = nS*ns1mtx;
+    nS = [1 0 0.4 ; 0 1 (-0.3)*v+3; 0 0 1 ];
+    nt4mtx = nS*nt4mtx;
+    nt4mtx = RotationScene(nt4mtx, -0.3 );
     v=v+1;
     
     pause(0.1);
@@ -225,6 +232,10 @@ for i=1:40
     axis([0 70 0 70]) ;
     set( gca, 'color','none','handlevisibility','off','visible','off');
 end
+
+
+
+
 
 disp('script completed');
 
