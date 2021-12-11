@@ -1,9 +1,6 @@
-%{
-last mod: Monday, December 6, 2021 2:31:05 PM
+%  Test push into my own branch.   Monday, December 6, 2021 2:54:05 PM
 
 
-
-%}
 
 clf  %This clears the figure, so remove this line if you want to preserve a plot you have already made
 % This creates the 'background' axes
@@ -22,8 +19,8 @@ set(ha,'handlevisibility','off', 'visible','off')
 % For example, we can put a plot in an axes
 %axes('position',[0.3,0.35,0.4,0.4])
 
-filename = '"ninja character images"/NinjaSword1.jpg';
-ninjaColor =[0.15, 0.0, 0.30];
+ninjaColor =[0.9, 0.9, 0.9];
+filename = 'NinjaSword1.jpg';
 thresh = 215;
 ninjasword1 = imread(filename);
 ns1mtx = fJpeg2pointsConverter(ninjasword1, thresh);
@@ -47,10 +44,8 @@ axesYpos = 0.4;
 axesXdim = 0.625;
 axesYdim = 0.625; 
 
-%  Shear is working now. 
-ns1mtx = ShearHScene(ns1mtx,0.5);
 
-for ii=1:0.5:10
+for ii=1:0.5:3
     %hb = axes('units','normalized', 'position',[0 0 1 1]);
     hb = axes('position',[axesXpos axesYpos axesXdim axesYdim]);
     h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
@@ -76,8 +71,6 @@ disp('script completed');
 ----------------------------------------------------------
 Functions below
 %}
-
-
 
 function fpiv = feetPivot(PP)
     % Get a pivot point at the feet of the character.
