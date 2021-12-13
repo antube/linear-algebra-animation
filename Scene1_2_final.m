@@ -6,7 +6,7 @@ SCENE 1 - Jake Kaplan
 %% Play background music throughout all scenes.
 [y,Fs] = audioread('ninja_music.wav');
 player = audioplayer(y,Fs);
-play(player)   % Start the music
+%play(player)   % Start the music
 
 %% Create background image
 clf %This clears the figure, so remove this line if you want to preserve a plot you have already made
@@ -284,11 +284,11 @@ x_final = characterCenter2(1,1);
 y_final = characterCenter2(2,1);
 fprintf("x_final = %f", x_final);
 fprintf("y_final = %f", y_final);
-% <<<<<<< Updated upstream
-% 
-% %%
-% =======
-% >>>>>>> Stashed changes
+
+
+
+
+
 %{
 SCENE 3 - Andrew Brown   
 %}
@@ -298,7 +298,10 @@ failureFlag = false;
 [failureFlag, ns1mtx, characterCenter, throwingStar1, throwingStar2] = third_scene(ns1mtx, [x_final, y_final], throwingStar, throwingStar, ninjaColor, ninjaStarColor, axesVisible);
 x_final = characterCenter(1,:);
 y_final = characterCenter(2,:);
-% <<<<<<< Updated upstream
+
+
+
+
 
 %%
 %{
@@ -406,7 +409,6 @@ for k=0:1/8:1
     set(h_rr,'Visible','off')   
 end
 stop(player)   % Stop the music after the animation is complete.
-% >>>>>>> Stashed changes
 disp('script completed');
 
 %{
@@ -689,6 +691,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
     
         % perform the transformation
         throwingStar1 = throwingTransformation1 * throwingStar1;
+        throwingStar1 = RotationScene(throwingStar1, -0.8);
         %throwingStar1 = RotationScene();
         pause(0.01);
     
@@ -722,6 +725,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
      
          % perform the transformation
          throwingStar2 = throwingTransformation2 * throwingStar2;
+         throwingStar2 = RotationScene(throwingStar2, -0.8);
          pause(0.05);
      
         %gif
