@@ -39,7 +39,6 @@ S = [0.02 0 0; 0 0.02 0; 0 0 1];  %This is my rescaling matrix to shrink the cha
 ns1mtx = S*ns1mtx;
 ns1mtx_orig = ns1mtx;
 
-gif('Scene1_2_final.m.gif')
 % import the throwing star sprite
 throwingStar = fJpeg2pointsConverter(imread("throwing-star.jpg"), thresh);
 
@@ -73,7 +72,7 @@ for i=1:0.5:numItr
     ns1mtx = Shift*ns1mtx;
     ns1mtx = RotationScene(ns1mtx,r);
     r = -1*r;
-    %gif
+    
     
     pause(0.1)
     set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -95,7 +94,7 @@ for i=1:numItr
 
     Shift = [1 0 -(6/numItr); 0 1 (6/numItr); 0 0 1];
     ns1mtx = Shift*ns1mtx;
-    %gif
+    
     
     pause(0.001)
     set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -116,7 +115,7 @@ for i=1:9
     ns1mtx = Shift*ns1mtx;
     ns1mtx = RotationScene(ns1mtx,r);
     r = -1*r;
-    %gif
+    
     
     pause(0.2)
     set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -136,7 +135,7 @@ for i=1:numItr
     
     Shift = [1 0 (5/numItr); 0 1 (5/numItr); 0 0 1];
     ns1mtx = Shift*ns1mtx;
-    %gif
+    
     
     pause(0.001);
     set(h_rr,'Visible','off');  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -167,7 +166,7 @@ for i=1:5
     
     nS = [1 0 0.5 ; 0 1 -0.1; 0 0 1 ];
     ns1mtx = nS*ns1mtx;
-    %gif
+    
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -188,7 +187,7 @@ for i=1:28
     ns1mtx = nS*ns1mtx;
     ns1mtx = squatScene(ns1mtx, 1.0 + (0.2*r) , 1.0);
     r=-1*r;
-    %gif
+    
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -209,7 +208,7 @@ for i=1:4
     % sv + c
     nS = [1 0 0.5 ; 0 1 0; 0 0 1 ];
     ns1mtx = nS*ns1mtx;
-    %gif
+    
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -237,7 +236,7 @@ for i=1:19
     nt4mtx = nS*nt4mtx;
     nt4mtx = RotationScene(nt4mtx, -0.66 );
     v=v+1;
-    %gif
+    
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -256,7 +255,7 @@ for i=1:6
     
     nS = [1 0 0.5; 0 1 0; 0 0 1];
     ns1mtx = nS*ns1mtx;
-    %gif
+    
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -273,7 +272,7 @@ for i=1:5
     
     nS = [1 0 1.5 ; 0 1 1; 0 0 1 ];
     ns1mtx = nS*ns1mtx;
-    %gif
+    
     
     pause(0.05);
     set(h_rr,'Visible','off');  
