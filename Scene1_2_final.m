@@ -369,52 +369,60 @@ CIout(3,13909);
 Z4=zeros(3,12245);
 CIout_New=[CIout,Z4];
 disp(S)
-CAout_New=S*CAout_New;
-CDout=S*CDout;
-CFout_New=S*CFout_New;
-CFout=S*CFout;
-CGout_New=S*CGout_New;
-CGout_New2=S*CGout_New2;
-CIout=S*CIout;
-CIout_New=S*CIout_New;
-CBout=S*CBout;
-shm=[1 0 0.3;0 1 0;0 0 1];
-for k=0:1/8:1
+% CAout_New=S*CAout_New;
+% CDout=S*CDout;
+% CFout_New=S*CFout_New;
+% CFout=S*CFout;
+% CGout_New=S*CGout_New;
+% CGout_New2=S*CGout_New2;
+% CIout=S*CIout;
+% CIout_New=S*CIout_New;
+% CBout=S*CBout;
+shM = [ 1 0 1; 0 1 0; 0 0 1];
+CAout_New = shM * S*CAout_New;
+CDout    =  shM * S*CDout;
+CFout_New=  shM * S*CFout_New;
+CFout    =  shM * S*CFout;
+CGout_New=  shM * S*CGout_New;
+CGout_New2= shM * S*CGout_New2;
+CIout     = shM * S*CIout;
+CIout_New = shM * S*CIout_New;
+CBout     = shM * S*CBout;
+for k=0:1/4:1
 	B = (1-k)*CAout_New + k*CDout;
-    hb = axes('units','normalized', 'position',[0.2 0.1 0.2 0.1]);
+    hb = axes('units','normalized', 'position',[0.4 0 0.2 0.1]);
     h_rr = plot(hb,B(1,:),B(2,:),'.', 'color', ninjaColor, 'MarkerSize', 1);
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     pause(0.25)
     set(h_rr,'Visible','off')   
 end
-for k=0:1/8:1
+for k=0:1/4:1
 	B = (1-k)*CDout + k*CFout_New;
-	hb = axes('units','normalized', 'position',[0.2 0.1 0.2 0.1]);
+	hb = axes('units','normalized', 'position',[0.4 0 0.2 0.1]);
     h_rr = plot(hb,B(1,:),B(2,:),'.', 'color', ninjaColor, 'MarkerSize', 1);
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     pause(0.25)
     set(h_rr,'Visible','off')   
 end
-for k=0:1/8:1
+for k=0:1/4:1
 	B = (1-k)*CFout + k*CGout_New;
-	hb = axes('units','normalized', 'position',[0.2 0.1 0.2 0.1]);
+	hb = axes('units','normalized', 'position',[0.4 0 0.2 0.1]);
     h_rr = plot(hb,B(1,:),B(2,:),'.', 'color', ninjaColor, 'MarkerSize', 1);
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     pause(0.25)
     set(h_rr,'Visible','off')   
 end
-for k=0:1/8:1
+for k=0:1/4:1
 	B = (1-k)*CGout_New2 + k*CIout;
-	hb = axes('units','normalized', 'position',[0.2 0.1 0.2 0.1]);
+	hb = axes('units','normalized', 'position',[0.4 0 0.2 0.1]);
     h_rr = plot(hb,B(1,:),B(2,:),'.', 'color', ninjaColor, 'MarkerSize', 1);
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     pause(0.25)
     set(h_rr,'Visible','off')    
 end
-for k=0:1/8:1
+for k=0:1/4:1
     B = (1-k)*CIout_New + k*CBout;
-    B=shm*B
-	hb = axes('units','normalized', 'position',[0.2 0.1 0.2 0.1]);
+	hb = axes('units','normalized', 'position',[0.4 0 0.2 0.1]);
     h_rr = plot(hb,B(1,:),B(2,:),'.', 'color', ninjaColor, 'MarkerSize', 1);
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     pause(0.25)
@@ -433,8 +441,6 @@ function PPt = teleportTo(PP,tx,ty)
     nS = [1 0 tx ; 0 1 ty; 0 0 1 ];
     PPt = nS*zPP;
 end
-
-
 function PPal = alignWith(PPprevmtx , newmtx )
     [Mrows Ncols] = size(PPprevmtx);
     center = feetPivot(newmtx);
