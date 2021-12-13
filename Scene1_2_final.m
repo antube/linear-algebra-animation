@@ -1,6 +1,6 @@
 %{
  
-Saturday, December 11, 2021 2:33:27 PM
+SCENE 1 - Jake Kaplan
 
 %}
 
@@ -11,7 +11,6 @@ Saturday, December 11, 2021 2:33:27 PM
 [y,Fs] = audioread('ninja_music.wav');
 player = audioplayer(y,Fs);
 play(player)   % Start the player
-stop(player)   % Stop whenever you like...
 %% Create background image
 clf %This clears the figure, so remove this line if you want to preserve a plot you have already made
 % This creates the 'background' axes
@@ -294,6 +293,7 @@ failureFlag = false;
 x_final = characterCenter(1,:);
 y_final = characterCenter(2,:);
 
+stop(player)   % Stop whenever you like...
 disp('script completed');
 
 %{
