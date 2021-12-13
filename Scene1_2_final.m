@@ -37,7 +37,7 @@ ns1mtx = [ns1mtx;ones(1,n)]; %Make the matrix 3x3 by adding a row of 1s
 S = [0.02 0 0; 0 0.02 0; 0 0 1];  %This is my rescaling matrix to shrink the character to fit the background
 ns1mtx = S*ns1mtx;
 ns1mtx_orig = ns1mtx;
-gif('Scene1_2_final.m.gif')
+%gif('Scene1_2_final.m.%gif')
 
 ninjaStarColor =[1, 1, 1];
 % import the throwing star sprite
@@ -305,7 +305,7 @@ y_final = characterCenter(2,:);
 SCENE 4 - Giovanni 
 %}
 
-stop(player)   % Stop the music after the animation is complete.
+% Stop the music after the animation is complete.
 % =======
 CA=imread('NinjaSword1.jpg');
 CAout=fJpeg2pointsConverter(CA,219);
@@ -405,7 +405,7 @@ for k=0:1/8:1
     pause(0.25)
     set(h_rr,'Visible','off')   
 end
-stop(player)   % Stop whenever you like...
+stop(player)   % Stop the music after the animation is complete.
 % >>>>>>> Stashed changes
 disp('script completed');
 
@@ -618,7 +618,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         character = fallTransformation * character;
         pause(0.01);
     
-        gif
+        %gif
 
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -639,7 +639,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         character = compressionTransformation * character;
         pause(0.01);
 
-        gif
+        %gif
     
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -659,7 +659,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         character = decompressionTransformation * character;
         pause(0.01);
     
-        gif
+        %gif
 
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -689,10 +689,10 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
     
         % perform the transformation
         throwingStar1 = throwingTransformation1 * throwingStar1;
-        throwingStar1 = RotationScene());
+        %throwingStar1 = RotationScene();
         pause(0.01);
     
-        gif
+        %gif
 
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -724,7 +724,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
          throwingStar2 = throwingTransformation2 * throwingStar2;
          pause(0.05);
      
-        gif
+        %gif
 
          % perform final setup for the animation
          set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -762,7 +762,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         character = runningTransformation * character;
         pause(0.02);
     
-        gif
+        %gif
 
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
