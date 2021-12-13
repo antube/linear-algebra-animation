@@ -13,15 +13,11 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
     % Setup the nessecary matrices
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % I need a centerpivot to call the transform and animate function
-    starTemplate = throwingStar1;
-    throwingStar1 = morph(throwingStar1, zeros(3, 419), 1);
-
     % have the character fall into the scene
     fallTransformation = [1 0 0.2; 0 1 -1; 0 0 1];
 
     % landing matrices.
-    compressionTransformation = [1 0 0; 0 0.98 0; 0 0 1];
+    compressionTransformation = [1 0 0; 0 0.90 0; 0 0 1];
     decompressionTransformation = inv(compressionTransformation);
 
 
@@ -60,6 +56,8 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         character = fallTransformation * character;
         pause(0.01);
     
+        gif
+
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
         axis([0 70 0 70]) % This let me set the scale I wanted in the inserted axes
@@ -78,6 +76,8 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         % perform the transformation
         character = compressionTransformation * character;
         pause(0.01);
+
+        gif
     
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -97,39 +97,28 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         character = decompressionTransformation * character;
         pause(0.01);
     
+        gif
+
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
         axis([0 70 0 70]) % This let me set the scale I wanted in the inserted axes
         set( gca, 'color','none','handlevisibility','off','visible','off')
     end
 
-
-    %{
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % the main emphasise is on the throwing star but I need the character to be visible.
+    % I plot the character here and later set his visibility to off
+    hb = axes('units','normalized', 'position',[-0.2 0.0625 1.2 1]);
+    h_rrCharacterBackground = plot(hb, character(1,:), character(2,:), '.', 'color', ninjaColor, 'MarkerSize', 1);
+    axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
     throwingStar1 = moveToCharacterHand(character, throwingStar1);
-
-    % morph first ninja star from point to star
-    for t = 0:1/6:1
-        % setup the plot for the animation frame
-        hb = axes('units','normalized', 'position',[-0.2 0.0625 1.2 1]);
-        h_rr = plot(hb, throwingStar1(1,:), throwingStar1(2,:), '.', 'color', ninjaColor, 'MarkerSize', 1);
-        axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
-        set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
-
-        throwingStar1 = morph(throwingStar1, starTemplate, t);
-        pause(0.02);
-
-        % perform final setup for the animation
-        set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
-        axis([0 70 0 70]) % This let me set the scale I wanted in the inserted axes
-        set( gca, 'color','none','handlevisibility','off','visible','off')
-    end
     
-
     
-
-
     % throw ninja star at first target
-    for j = 1:20
+    for j = 1:11
         % setup the plot for the animation frame
         hb = axes('units','normalized', 'position',[-0.2 0.0625 1.2 1]);
         h_rr = plot(hb, throwingStar1(1,:), throwingStar1(2,:), '.', 'color', ninjaColor, 'MarkerSize', 1);
@@ -138,14 +127,33 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
     
         % perform the transformation
         throwingStar1 = throwingTransformation * throwingStar1;
-        pause(0.05);
+        pause(0.01);
     
+        gif
+
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
         axis([0 70 0 70]) % This let me set the scale I wanted in the inserted axes
         set( gca, 'color','none','handlevisibility','off','visible','off')
     end
-    %}
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % destroy the background character as he is now the main focus
+
+    % perform final setup for the animation
+    set(h_rrCharacterBackground,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
+    axis([0 70 0 70]) % This let me set the scale I wanted in the inserted axes
+    set( gca, 'color','none','handlevisibility','off','visible','off')
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % draw throwingStar1 to the screen as background image
+    % I will never touch this again as the throwing star will stay right where it has landed
+    hb = axes('units','normalized', 'position',[-0.2 0.0625 1.2 1]);
+    h_rrThrowingStar1Background = plot(hb, throwingStar1(1,:), throwingStar1(2,:), '.', 'color', ninjaColor, 'MarkerSize', 1);
+    axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
@@ -161,6 +169,8 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         character = runningTransformation * character;
         pause(0.02);
     
+        gif
+
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
         axis([0 70 0 70]) % This let me set the scale I wanted in the inserted axes
@@ -168,16 +178,15 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
     end
 
 
+    % setup the plot for the animation frame
+    hb = axes('units','normalized', 'position',[-0.2 0.0625 1.2 1]);
+    h_rrCharacterBackground = plot(hb, character(1,:), character(2,:), '.', 'color', ninjaColor, 'MarkerSize', 1);
+    axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
 
 
     %{
     throwingStar2 = moveToCharacterHand(character, throwingStar2);
-
-    % morph second ninja star from point to star
-    for t = 0:1/6:1
-        throwingStar2 = morph(throwingStar2, starTemplate, t);
-        pause(0.02);
-    end
 
     % throw ninja star at second target
     for j = 1:4
@@ -191,12 +200,20 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
          throwingStar2 = throwingTransformation * throwingStar2;
          pause(0.05);
      
+        gif
+
          % perform final setup for the animation
          set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
          axis([0 70 0 70]) % This let me set the scale I wanted in the inserted axes
          set( gca, 'color','none','handlevisibility','off','visible','off')
     end
     %}
+
+    % perform final setup for the animation
+    set(h_rrCharacterBackground,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
+    axis([0 70 0 70]) % This let me set the scale I wanted in the inserted axes
+    set( gca, 'color','none','handlevisibility','off','visible','off')
+
 
     characterCenter = centerPivot(character);
     failureFlag = false;
@@ -222,14 +239,28 @@ end
 %       input:
 %               character : the character matrix
 %               sprite    : the sprite to move to the characters hand
+%                               NOTE: sprite must be in a homogenous coordinate system.
 %
 %       output:
 %               outputSprite = The resulting sprite in the proper position
 
 function outputSprite = moveToCharacterHand(character, sprite)
+    % get the center of the character
     characterCenter = centerPivot(character);
+
+    % move to the center of the character
     outputSprite = teleportTo(sprite, characterCenter(1,:), characterCenter(2,:));
+
+    %translation matrix for moving from the center of the character to the hand
+    translateToHand = [1 0 7; 0 1 5; 0 0 1];
+
+    % translate to the characters hand
+    outputsprite = translateToHand * outputSprite;
 end
+
+
+
+
 
 function cent = centerPivot(PP)
     % Assume these points are moved into a scene frame.
