@@ -26,11 +26,11 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
 
 
     % This transformation matrix  is used to move the ninja stars across the scene
-    throwingTransformation = [1 0 1; 0 1 0; 0 0 0];
+    throwingTransformation = [1 0 1; 0 1 0; 0 0 1];
 
 
     % running transformation matrix
-    runningTransformation = [1 0 3; 0 1 0; 0 0 0];
+    runningTransformation = [1 0 1; 0 1 0; 0 0 1];
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Perform the Animation
@@ -68,7 +68,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
     end
 
     % upon landing compress the character slightly to mimick a energy capture after landing
-    for j = 1:4
+    for j = 1:3
         % setup the plot for the animation frame
         hb = axes('units','normalized', 'position',[-0.2 0.0625 1.2 1]);
         h_rr = plot(hb,character(1,:), character(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1);
@@ -86,7 +86,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
     end
 
     % decompress to stand back up 
-    for j = 1:4
+    for j = 1:3
         % setup the plot for the animation frame
         hb = axes('units','normalized', 'position',[-0.2 0.0625 1.2 1]);
         h_rr = plot(hb,character(1,:), character(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1);
@@ -96,25 +96,6 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         % perform the transformation
         character = decompressionTransformation * character;
         pause(0.01);
-    
-        % perform final setup for the animation
-        set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
-        axis([0 70 0 70]) % This let me set the scale I wanted in the inserted axes
-        set( gca, 'color','none','handlevisibility','off','visible','off')
-    end
-
-
-    % run to middle of the scene
-    for j = 1:40
-        % setup the plot for the animation frame
-        hb = axes('units','normalized', 'position',[-0.2 0.0625 1.2 1]);
-        h_rr = plot(hb, character(1,:), character(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1);
-        axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
-        set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
-    
-        % perform the transformation
-        character = runningTransformation * character;
-        pause(0.2);
     
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -143,6 +124,10 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         set( gca, 'color','none','handlevisibility','off','visible','off')
     end
     
+
+    
+
+
     % throw ninja star at first target
     for j = 1:20
         % setup the plot for the animation frame
@@ -164,9 +149,23 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
 
 
 
-
-
+     % run to middle of the scene
+     for j = 1:33
+        % setup the plot for the animation frame
+        hb = axes('units','normalized', 'position',[-0.2 0.0625 1.2 1]);
+        h_rr = plot(hb, character(1,:), character(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1);
+        axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
+        set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     
+        % perform the transformation
+        character = runningTransformation * character;
+        pause(0.02);
+    
+        % perform final setup for the animation
+        set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
+        axis([0 70 0 70]) % This let me set the scale I wanted in the inserted axes
+        set( gca, 'color','none','handlevisibility','off','visible','off')
+    end
 
 
 

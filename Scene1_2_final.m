@@ -43,6 +43,8 @@ S = [0.02 0 0; 0 0.02 0; 0 0 1];  %This is my rescaling matrix to shrink the cha
 ns1mtx = S*ns1mtx;
 ns1mtx_orig = ns1mtx;
 
+
+
 % import the throwing star sprite
 throwingStar = fJpeg2pointsConverter(imread("throwing-star.jpg"), thresh);
 
@@ -52,6 +54,7 @@ throwingStar = [throwingStar;ones(1,n)];
 
 % rescale the throwing star to the character
 throwingStar = S*throwingStar;
+
 
 
 axesVisible = 'off'; 
