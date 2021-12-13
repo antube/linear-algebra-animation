@@ -25,7 +25,6 @@ set(ha,'handlevisibility','off', 'visible','off')
 % Now we can use the figure, as required.
 % For example, we can put a plot in an axes
 %axes('position',[0.3,0.35,0.4,0.4])
-
 filename = 'NinjaSword1.jpg';
 ninjaColor =[0, 0, 1];
 thresh = 219;
@@ -38,15 +37,12 @@ ns1mtx = [ns1mtx;ones(1,n)]; %Make the matrix 3x3 by adding a row of 1s
 S = [0.02 0 0; 0 0.02 0; 0 0 1];  %This is my rescaling matrix to shrink the character to fit the background
 ns1mtx = S*ns1mtx;
 ns1mtx_orig = ns1mtx;
-
 gif('Scene1_2_final.m.gif')
 % import the throwing star sprite
 throwingStar = fJpeg2pointsConverter(imread("throwing-star.jpg"), thresh);
-
 % get the size and convert the matrix to a set of homogenous coordinates
 [m,n]=size(throwingStar);
 throwingStar = [throwingStar;ones(1,n)];
-
 % rescale the throwing star to the character
 throwingStar = S*throwingStar;
 
@@ -92,7 +88,6 @@ for i=1:numItr
     h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
     axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
-
     Shift = [1 0 -(6/numItr); 0 1 (6/numItr); 0 0 1];
     ns1mtx = Shift*ns1mtx;
     %gif
@@ -287,8 +282,11 @@ x_final = characterCenter2(1,1);
 y_final = characterCenter2(2,1);
 fprintf("x_final = %f", x_final);
 fprintf("y_final = %f", y_final);
-
-%%
+% <<<<<<< Updated upstream
+% 
+% %%
+% =======
+% >>>>>>> Stashed changes
 %{
 SCENE 3 - Andrew Brown   
 %}
@@ -298,6 +296,7 @@ failureFlag = false;
 [failureFlag, ns1mtx, characterCenter, throwingStar1, throwingStar2] = third_scene(ns1mtx, [x_final, y_final], throwingStar, throwingStar, ninjaColor, axesVisible);
 x_final = characterCenter(1,:);
 y_final = characterCenter(2,:);
+% <<<<<<< Updated upstream
 
 %%
 %{
@@ -305,6 +304,107 @@ SCENE 4 - Giovanni
 %}
 
 stop(player)   % Stop the music after the animation is complete.
+% =======
+CA=imread('NinjaSword1.jpg');
+CAout=fJpeg2pointsConverter(CA,219);
+CD=imread('NinjaSword3.jpg');
+CDout=fJpeg2pointsConverter(CD,219);
+CF=imread('NinjaTool2.jpg');
+CFout=fJpeg2pointsConverter(CF,219);
+CG=imread('NinjaTool3.jpg');
+CGout=fJpeg2pointsConverter(CG,219);
+CI=imread('SmokeBomb.jpg');
+CIout=fJpeg2pointsConverter(CI,219);
+CB=imread('ninjalogo1.jpg');
+CBout=fJpeg2pointsConverter(CB,219);
+A=CAout;
+[m,n1]=size(CAout);
+disp(m);  disp(n1); 
+CAout = [CAout;ones(1,n1)]; 
+S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
+CAout = S*CAout;
+B=CBout;
+[m,n2]=size(CBout);
+disp(m);  disp(n2); 
+CBout = [CBout;ones(1,n2)]; 
+S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
+CBout = S*CBout;
+D=CDout;
+[m,n3]=size(CDout);
+disp(m);  disp(n3); 
+CDout = [CDout;ones(1,n3)]; 
+S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
+CDout = S*CDout;
+F=CFout;
+[m,n4]=size(CFout);
+disp(m);  disp(n4); 
+CFout = [CFout;ones(1,n4)]; 
+S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
+CFout = S*CFout;
+G=CGout;
+[m,n5]=size(CGout);
+disp(m);  disp(n5); 
+CGout = [CGout;ones(1,n5)]; 
+S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
+CGout = S*CGout;
+I=CIout;
+[m,n6]=size(CIout);
+disp(m);  disp(n6); 
+CIout = [CIout;ones(1,n6)]; 
+S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
+CIout = S*CIout;
+Z=zeros(2,279);
+CAout_New= [A,Z];
+Z2=zeros(2,985);
+CFout_New=[F,Z2];
+Z3=zeros(2,94);
+CGout_New=[G,Z3];
+Z4=zeros(2,1831);
+CGout_New2=[G,Z4];
+Z5=zeros(2,12245);
+CIout_New=[I,Z5];
+for k=0:1/8:1
+	B = (1-k)*CAout_New + k*D;
+    hb = axes('units','normalized', 'position',[0.2 0 0.5 0.5]);
+    h_rr = plot(hb,B(1,:),B(2,:),'.');
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    pause(0.25)
+    set(h_rr,'Visible','off')   
+end
+for k=0:1/8:1
+	B = (1-k)*CDout + k*CFout_New;
+	hb = axes('units','normalized', 'position',[0.2 0 0.5 0.5]);
+    h_rr = plot(hb,B(1,:),B(2,:),'.');
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    pause(0.25)
+    set(h_rr,'Visible','off')   
+end
+for k=0:1/8:1
+	B = (1-k)*CFout + k*CGout_New;
+	hb = axes('units','normalized', 'position',[0.2 0 0.5 0.5]);
+    h_rr = plot(hb,B(1,:),B(2,:),'.');
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    pause(0.25)
+    set(h_rr,'Visible','off')   
+end
+for k=0:1/8:1
+	B = (1-k)*CGout_New2 + k*CIout;
+	hb = axes('units','normalized', 'position',[0.2 0 0.5 0.5]);
+    h_rr = plot(hb,B(1,:),B(2,:),'.');
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    pause(0.25)
+    set(h_rr,'Visible','off')    
+end
+for k=0:1/8:1
+    B = (1-k)*CIout_New + k*CBout;
+	hb = axes('units','normalized', 'position',[0.2 0 0.5 0.5]);
+    h_rr = plot(hb,B(1,:),B(2,:),'.');
+    set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    pause(0.25)
+    set(h_rr,'Visible','off')   
+end
+stop(player)   % Stop whenever you like...
+% >>>>>>> Stashed changes
 disp('script completed');
 
 %{
