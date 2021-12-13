@@ -6,7 +6,7 @@ SCENE 1 - Jake Kaplan
 %% Play background music throughout all scenes.
 [y,Fs] = audioread('ninja_music.wav');
 player = audioplayer(y,Fs);
-%play(player)   % Start the music
+play(player)   % Start the music
 
 %% Create background image
 clf %This clears the figure, so remove this line if you want to preserve a plot you have already made
