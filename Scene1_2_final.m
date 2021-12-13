@@ -213,14 +213,12 @@ for i=1:4
     axis([0 70 0 70]) ;
     set( gca, 'color','none','handlevisibility','off','visible','off');
 end
-
 nt4mtx = loadNinjaTool4('NinjaTool4.jpg');
 Z = (-1)*centerPivot(nt4mtx);
 nt4mtx = ShiftScene(nt4mtx, Z(1),Z(2));
 nt4mtx = [-1 0 0; 0 -1 0; 0 0 1]*nt4mtx;
 algn = alignWith(ns1mtx , nt4mtx);
 nt4mtx = algn;
-
 %% Frontflip
 v=1;
 for i=1:19
@@ -320,35 +318,36 @@ CI=imread('SmokeBomb.jpg');
 CIout=fJpeg2pointsConverter(CI,219);
 CB=imread('ninjalogo1.jpg');
 CBout=fJpeg2pointsConverter(CB,219);
+S = [0.025 0 0; 0 0.025 0; 0 0 1];  
 A=CAout;
 [m,n1]=size(CAout);
 disp(m);  disp(n1); 
 CAout = [CAout;ones(1,n1)]; 
-S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
+S = [0.025 0 0; 0 0.02 0; 0 0 1]; 
 CAout = S*CAout;
 B=CBout;
 [m,n2]=size(CBout);
 disp(m);  disp(n2); 
 CBout = [CBout;ones(1,n2)]; 
-S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
+S = [0.025 0 0; 0 0.02 0; 0 0 1]; 
 CBout = S*CBout;
 D=CDout;
 [m,n3]=size(CDout);
 disp(m);  disp(n3); 
 CDout = [CDout;ones(1,n3)]; 
-S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
+S = [0.025 0 0; 0 0.02 0; 0 0 1]; 
 CDout = S*CDout;
 F=CFout;
 [m,n4]=size(CFout);
 disp(m);  disp(n4); 
 CFout = [CFout;ones(1,n4)]; 
-S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
+S = [0.025 0 0; 0 0.02 0; 0 0 1]; 
 CFout = S*CFout;
 G=CGout;
 [m,n5]=size(CGout);
 disp(m);  disp(n5); 
 CGout = [CGout;ones(1,n5)]; 
-S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
+S = [0.025 0 0; 0 0.02 0; 0 0 1]; 
 CGout = S*CGout;
 I=CIout;
 [m,n6]=size(CIout);
@@ -379,42 +378,44 @@ CGout_New2=S*CGout_New2;
 CIout=S*CIout;
 CIout_New=S*CIout_New;
 CBout=S*CBout;
+shm=[1 0 0.3;0 1 0;0 0 1];
 for k=0:1/8:1
 	B = (1-k)*CAout_New + k*CDout;
-    hb = axes('units','normalized', 'position',[0.2 0 0.5 0.5]);
-    h_rr = plot(hb,B(1,:),B(2,:),'.');
+    hb = axes('units','normalized', 'position',[0.2 0.1 0.2 0.1]);
+    h_rr = plot(hb,B(1,:),B(2,:),'.', 'color', ninjaColor, 'MarkerSize', 1);
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     pause(0.25)
     set(h_rr,'Visible','off')   
 end
 for k=0:1/8:1
 	B = (1-k)*CDout + k*CFout_New;
-	hb = axes('units','normalized', 'position',[0.2 0 0.5 0.5]);
-    h_rr = plot(hb,B(1,:),B(2,:),'.');
+	hb = axes('units','normalized', 'position',[0.2 0.1 0.2 0.1]);
+    h_rr = plot(hb,B(1,:),B(2,:),'.', 'color', ninjaColor, 'MarkerSize', 1);
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     pause(0.25)
     set(h_rr,'Visible','off')   
 end
 for k=0:1/8:1
 	B = (1-k)*CFout + k*CGout_New;
-	hb = axes('units','normalized', 'position',[0.2 0 0.5 0.5]);
-    h_rr = plot(hb,B(1,:),B(2,:),'.');
+	hb = axes('units','normalized', 'position',[0.2 0.1 0.2 0.1]);
+    h_rr = plot(hb,B(1,:),B(2,:),'.', 'color', ninjaColor, 'MarkerSize', 1);
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     pause(0.25)
     set(h_rr,'Visible','off')   
 end
 for k=0:1/8:1
 	B = (1-k)*CGout_New2 + k*CIout;
-	hb = axes('units','normalized', 'position',[0.2 0 0.5 0.5]);
-    h_rr = plot(hb,B(1,:),B(2,:),'.');
+	hb = axes('units','normalized', 'position',[0.2 0.1 0.2 0.1]);
+    h_rr = plot(hb,B(1,:),B(2,:),'.', 'color', ninjaColor, 'MarkerSize', 1);
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     pause(0.25)
     set(h_rr,'Visible','off')    
 end
 for k=0:1/8:1
     B = (1-k)*CIout_New + k*CBout;
-	hb = axes('units','normalized', 'position',[0.2 0 0.5 0.5]);
-    h_rr = plot(hb,B(1,:),B(2,:),'.');
+    B=shm*B
+	hb = axes('units','normalized', 'position',[0.2 0.1 0.2 0.1]);
+    h_rr = plot(hb,B(1,:),B(2,:),'.', 'color', ninjaColor, 'MarkerSize', 1);
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
     pause(0.25)
     set(h_rr,'Visible','off')   
@@ -425,7 +426,6 @@ disp('script completed');
 ----------------------------------------------------------
 Functions below
 %}
-
 function PPt = teleportTo(PP,tx,ty)
     nc = centerPivot(PP); 
     nP = [1 0 -1*nc(1) ; 0 1 -1*nc(2); 0 0 1 ];

@@ -10,6 +10,7 @@ CI=imread('SmokeBomb.jpg');
 CIout=fJpeg2pointsConverter(CI,219);
 CB=imread('ninjalogo1.jpg');
 CBout=fJpeg2pointsConverter(CB,219);
+S = [0.025 0 0; 0 0.025 0; 0 0 1];  
 A=CAout;
 [m,n1]=size(CAout);
 disp(m);  disp(n1); 
@@ -126,3 +127,4 @@ function PPout = fJpeg2pointsConverter(BB,THRESHOLD)
     end
     PPout = PP(:,1:cnt);
 end
+

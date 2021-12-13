@@ -10,41 +10,13 @@ CI=imread('SmokeBomb.jpg');
 CIout=fJpeg2pointsConverter(CI,219);
 CB=imread('ninjalogo1.jpg');
 CBout=fJpeg2pointsConverter(CB,219);
+S = [0.025 0 0; 0 0.025 0; 0 0 1];  
 A=CAout;
-[m,n1]=size(CAout);
-disp(m);  disp(n1); 
-CAout = [CAout;ones(1,n1)]; 
-S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
-CAout = S*CAout;
 B=CBout;
-[m,n2]=size(CBout);
-disp(m);  disp(n2); 
-CBout = [CBout;ones(1,n2)]; 
-S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
-CBout = S*CBout;
 D=CDout;
-[m,n3]=size(CDout);
-disp(m);  disp(n3); 
-CDout = [CDout;ones(1,n3)]; 
-S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
-CDout = S*CDout;
 F=CFout;
-[m,n4]=size(CFout);
-disp(m);  disp(n4); 
-CFout = [CFout;ones(1,n4)]; 
-S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
-CFout = S*CFout;
 G=CGout;
-[m,n5]=size(CGout);
-disp(m);  disp(n5); 
-CGout = [CGout;ones(1,n5)]; 
-S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
-CGout = S*CGout;
 I=CIout;
-[m,n6]=size(CIout);
-disp(m);  disp(n6); 
-CIout = [CIout;ones(1,n6)]; 
-S = [0.02 0 0; 0 0.02 0; 0 0 1];
 CAout(3,12878);
 Z=zeros(3,279);
 CAout_New= [CAout,Z];
@@ -59,8 +31,15 @@ CGout_New2=[CGout,Z3];
 CIout(3,13909);
 Z4=zeros(3,12245);
 CIout_New=[CIout,Z4];
-CAout_New=S*CAout_New;
-CDout=S*CDout;
+% CAout_New=S*CAout_New;
+% CDout=S*CDout;
+% CFout_New=S*CFout_New;
+% CFout=S*CFout;
+% CGout_New=S*CGout_New;
+% CGout_New2=S*CGout_New2;
+% CIout=S*CIout;
+% CIout_New=S*CIout_New;
+% CBout=S*CBout;
 for k=0:1/8:1
 	B = (1-k)*CAout_New + k*CDout;
     hb = axes('units','normalized', 'position',[0.2 0 0.5 0.5]);
@@ -119,3 +98,16 @@ function PPout = fJpeg2pointsConverter(BB,THRESHOLD)
     end
     PPout = PP(:,1:cnt);
 end
+function CAout = loadNinjaSword1(filename)
+    thresh = 219;
+    ninjatool4 = imread(filename);
+    CAout= fJpeg2pointsConverter(ninjatool4, thresh);
+    [m,n]=size(CAout);
+    fprintf("%s size (thresh=%i) , [%i,%i]",filename,thresh,m,n);
+    disp(m);  disp(n); 
+    CAout = [CAout;ones(1,n)];
+    %This is my rescaling matrix to shrink the character to fit the background
+    S = [0.025 0 0; 0 0.025 0; 0 0 1];  
+    CAout = S*CAout;
+end
+
