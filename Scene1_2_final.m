@@ -37,7 +37,7 @@ ns1mtx = [ns1mtx;ones(1,n)]; %Make the matrix 3x3 by adding a row of 1s
 S = [0.02 0 0; 0 0.02 0; 0 0 1];  %This is my rescaling matrix to shrink the character to fit the background
 ns1mtx = S*ns1mtx;
 ns1mtx_orig = ns1mtx;
-%gif('Scene1_2_final.m.%gif')
+gif('Scene1_2_final.m.gif')
 
 ninjaStarColor =[1, 1, 1];
 % import the throwing star sprite
@@ -71,7 +71,7 @@ for i=1:0.5:numItr
     ns1mtx = Shift*ns1mtx;
     ns1mtx = RotationScene(ns1mtx,r);
     r = -1*r;
-    
+    gif
     
     pause(0.1)
     set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -90,9 +90,10 @@ for i=1:numItr
     h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
     axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    
     Shift = [1 0 -(6/numItr); 0 1 (6/numItr); 0 0 1];
     ns1mtx = Shift*ns1mtx;
-    
+    gif
     
     pause(0.001)
     set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -113,7 +114,7 @@ for i=1:9
     ns1mtx = Shift*ns1mtx;
     ns1mtx = RotationScene(ns1mtx,r);
     r = -1*r;
-    
+    gif
     
     pause(0.2)
     set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -133,7 +134,7 @@ for i=1:numItr
     
     Shift = [1 0 (5/numItr); 0 1 (5/numItr); 0 0 1];
     ns1mtx = Shift*ns1mtx;
-    
+    gif
     
     pause(0.001);
     set(h_rr,'Visible','off');  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -164,7 +165,7 @@ for i=1:5
     
     nS = [1 0 0.5 ; 0 1 -0.1; 0 0 1 ];
     ns1mtx = nS*ns1mtx;
-    
+    gif
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -185,7 +186,7 @@ for i=1:28
     ns1mtx = nS*ns1mtx;
     ns1mtx = squatScene(ns1mtx, 1.0 + (0.2*r) , 1.0);
     r=-1*r;
-    
+    gif
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -206,7 +207,7 @@ for i=1:4
     % sv + c
     nS = [1 0 0.5 ; 0 1 0; 0 0 1 ];
     ns1mtx = nS*ns1mtx;
-    
+    gif
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -232,7 +233,7 @@ for i=1:19
     nt4mtx = nS*nt4mtx;
     nt4mtx = RotationScene(nt4mtx, -0.66 );
     v=v+1;
-    
+    gif
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -251,7 +252,7 @@ for i=1:6
     
     nS = [1 0 0.5; 0 1 0; 0 0 1];
     ns1mtx = nS*ns1mtx;
-    
+    gif
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -268,7 +269,7 @@ for i=1:5
     
     nS = [1 0 1.5 ; 0 1 1; 0 0 1 ];
     ns1mtx = nS*ns1mtx;
-    
+    gif
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -636,7 +637,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         character = fallTransformation * character;
         pause(0.01);
     
-        %gif
+        gif
 
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -657,7 +658,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         character = compressionTransformation * character;
         pause(0.01);
 
-        %gif
+        gif
     
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -677,7 +678,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         character = decompressionTransformation * character;
         pause(0.01);
     
-        %gif
+        gif
 
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -711,7 +712,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         %throwingStar1 = RotationScene();
         pause(0.01);
     
-        %gif
+        gif
 
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -744,7 +745,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
          throwingStar2 = RotationScene(throwingStar2, -0.8);
          pause(0.05);
      
-        %gif
+        gif
 
          % perform final setup for the animation
          set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -782,7 +783,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         character = runningTransformation * character;
         pause(0.02);
     
-        %gif
+        gif
 
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
