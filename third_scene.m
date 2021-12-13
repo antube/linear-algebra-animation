@@ -9,6 +9,9 @@
 %       characterCenter: A vector representing the center of the charcter after the third scene is complete
 
 function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2] = third_scene(character, characterCenter, throwingStar1, throwingStar2, ninjaColor, axesVisible)
+    %gif('third_scene.m.gif');
+    
+    
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Setup the nessecary matrices
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -56,7 +59,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         character = fallTransformation * character;
         pause(0.01);
     
-        gif
+        %gif
 
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -77,7 +80,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         character = compressionTransformation * character;
         pause(0.01);
 
-        gif
+        %gif
     
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -97,7 +100,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         character = decompressionTransformation * character;
         pause(0.01);
     
-        gif
+        %gif
 
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -129,7 +132,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         throwingStar1 = throwingTransformation * throwingStar1;
         pause(0.01);
     
-        gif
+        %gif
 
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -169,7 +172,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
         character = runningTransformation * character;
         pause(0.02);
     
-        gif
+        %gif
 
         % perform final setup for the animation
         set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
