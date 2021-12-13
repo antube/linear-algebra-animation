@@ -302,8 +302,6 @@ y_final = characterCenter(2,:);
 %{
 SCENE 4 - Giovanni 
 %}
-
-stop(player)   % Stop the music after the animation is complete.
 % =======
 CA=imread('NinjaSword1.jpg');
 CAout=fJpeg2pointsConverter(CA,219);
@@ -351,20 +349,33 @@ I=CIout;
 [m,n6]=size(CIout);
 disp(m);  disp(n6); 
 CIout = [CIout;ones(1,n6)]; 
-S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
-CIout = S*CIout;
-Z=zeros(2,279);
-CAout_New= [A,Z];
-Z2=zeros(2,985);
-CFout_New=[F,Z2];
-Z3=zeros(2,94);
-CGout_New=[G,Z3];
-Z4=zeros(2,1831);
-CGout_New2=[G,Z4];
-Z5=zeros(2,12245);
-CIout_New=[I,Z5];
+S = [0.02 0 0; 0 0.02 0; 0 0 1];
+CAout(3,12878);
+Z=zeros(3,279);
+CAout_New= [CAout,Z];
+CFout(3,12172);
+Z1=zeros(3,985);
+CFout_New=[CFout,Z1];
+CGout(3,12078);
+Z2=zeros(3,94);
+CGout_New=[CGout,Z2];
+Z3=zeros(3,1831);
+CGout_New2=[CGout,Z3];
+CIout(3,13909);
+Z4=zeros(3,12245);
+CIout_New=[CIout,Z4];
+disp(S)
+CAout_New=S*CAout_New;
+CDout=S*CDout;
+CFout_New=S*CFout_New;
+CFout=S*CFout;
+CGout_New=S*CGout_New;
+CGout_New2=S*CGout_New2;
+CIout=S*CIout;
+CIout_New=S*CIout_New;
+CBout=S*CBout;
 for k=0:1/8:1
-	B = (1-k)*CAout_New + k*D;
+	B = (1-k)*CAout_New + k*CDout;
     hb = axes('units','normalized', 'position',[0.2 0 0.5 0.5]);
     h_rr = plot(hb,B(1,:),B(2,:),'.');
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
@@ -406,7 +417,6 @@ end
 stop(player)   % Stop whenever you like...
 % >>>>>>> Stashed changes
 disp('script completed');
-
 %{
 ----------------------------------------------------------
 Functions below

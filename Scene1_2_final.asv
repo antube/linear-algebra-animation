@@ -25,7 +25,6 @@ set(ha,'handlevisibility','off', 'visible','off')
 % Now we can use the figure, as required.
 % For example, we can put a plot in an axes
 %axes('position',[0.3,0.35,0.4,0.4])
-
 filename = 'NinjaSword1.jpg';
 ninjaColor =[0, 0, 1];
 thresh = 219;
@@ -38,15 +37,12 @@ ns1mtx = [ns1mtx;ones(1,n)]; %Make the matrix 3x3 by adding a row of 1s
 S = [0.02 0 0; 0 0.02 0; 0 0 1];  %This is my rescaling matrix to shrink the character to fit the background
 ns1mtx = S*ns1mtx;
 ns1mtx_orig = ns1mtx;
-
 gif('Scene1_2_final.m.gif')
 % import the throwing star sprite
 throwingStar = fJpeg2pointsConverter(imread("throwing-star.jpg"), thresh);
-
 % get the size and convert the matrix to a set of homogenous coordinates
 [m,n]=size(throwingStar);
 throwingStar = [throwingStar;ones(1,n)];
-
 % rescale the throwing star to the character
 throwingStar = S*throwingStar;
 
@@ -73,7 +69,7 @@ for i=1:0.5:numItr
     ns1mtx = Shift*ns1mtx;
     ns1mtx = RotationScene(ns1mtx,r);
     r = -1*r;
-    gif
+    %gif
     
     pause(0.1)
     set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -92,10 +88,9 @@ for i=1:numItr
     h_rr = plot(hb,ns1mtx(1,:), ns1mtx(2,:),   '.', 'color', ninjaColor, 'MarkerSize', 1); 
     axis([0 70 0 70]) %This let me set the scale I wanted in the inserted axes
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
-
     Shift = [1 0 -(6/numItr); 0 1 (6/numItr); 0 0 1];
     ns1mtx = Shift*ns1mtx;
-    gif
+    %gif
     
     pause(0.001)
     set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -116,7 +111,7 @@ for i=1:9
     ns1mtx = Shift*ns1mtx;
     ns1mtx = RotationScene(ns1mtx,r);
     r = -1*r;
-    gif
+    %gif
     
     pause(0.2)
     set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -136,7 +131,7 @@ for i=1:numItr
     
     Shift = [1 0 (5/numItr); 0 1 (5/numItr); 0 0 1];
     ns1mtx = Shift*ns1mtx;
-    gif
+    %gif
     
     pause(0.001);
     set(h_rr,'Visible','off');  % This line erases the image of the Road Runner and Wile E. Coyote
@@ -167,7 +162,7 @@ for i=1:5
     
     nS = [1 0 0.5 ; 0 1 -0.1; 0 0 1 ];
     ns1mtx = nS*ns1mtx;
-    gif
+    %gif
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -188,7 +183,7 @@ for i=1:28
     ns1mtx = nS*ns1mtx;
     ns1mtx = squatScene(ns1mtx, 1.0 + (0.2*r) , 1.0);
     r=-1*r;
-    gif
+    %gif
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -209,7 +204,7 @@ for i=1:4
     % sv + c
     nS = [1 0 0.5 ; 0 1 0; 0 0 1 ];
     ns1mtx = nS*ns1mtx;
-    gif
+    %gif
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -237,7 +232,7 @@ for i=1:19
     nt4mtx = nS*nt4mtx;
     nt4mtx = RotationScene(nt4mtx, -0.66 );
     v=v+1;
-    gif
+    %gif
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -256,7 +251,7 @@ for i=1:6
     
     nS = [1 0 0.5; 0 1 0; 0 0 1];
     ns1mtx = nS*ns1mtx;
-    gif
+    %gif
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -273,7 +268,7 @@ for i=1:5
     
     nS = [1 0 1.5 ; 0 1 1; 0 0 1 ];
     ns1mtx = nS*ns1mtx;
-    gif
+    %gif
     
     pause(0.05);
     set(h_rr,'Visible','off');  
@@ -307,8 +302,6 @@ y_final = characterCenter(2,:);
 %{
 SCENE 4 - Giovanni 
 %}
-
-stop(player)   % Stop the music after the animation is complete.
 % =======
 CA=imread('NinjaSword1.jpg');
 CAout=fJpeg2pointsConverter(CA,219);
@@ -335,27 +328,44 @@ CBout = [CBout;ones(1,n2)];
 S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
 CBout = S*CBout;
 D=CDout;
-[m,n1]=size(CDout);
-disp(m);  disp(n1); 
-CAout = [CAout;ones(1,n1)]; 
+[m,n3]=size(CDout);
+disp(m);  disp(n3); 
+CDout = [CDout;ones(1,n3)]; 
 S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
-CAout = S*CAout;
+CDout = S*CDout;
 F=CFout;
+[m,n4]=size(CFout);
+disp(m);  disp(n4); 
+CFout = [CFout;ones(1,n4)]; 
+S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
+CFout = S*CFout;
 G=CGout;
+[m,n5]=size(CGout);
+disp(m);  disp(n5); 
+CGout = [CGout;ones(1,n5)]; 
+S = [0.02 0 0; 0 0.02 0; 0 0 1]; 
+CGout = S*CGout;
 I=CIout;
-Z=zeros(2,279);
-CAout_New= [A,Z];
-Z2=zeros(2,985);
-CFout_New=[F,Z2];
-Z3=zeros(2,94);
-CGout_New=[G,Z3];
-Z4=zeros(2,1831);
-CGout_New2=[G,Z4];
-Z5=zeros(2,12245);
-CIout_New=[I,Z5];
-
+[m,n6]=size(CIout);
+disp(m);  disp(n6); 
+CIout = [CIout;ones(1,n6)]; 
+S = [0.02 0 0; 0 0.02 0; 0 0 1];
+CAout(3,12878);
+Z=zeros(3,279);
+CAout_New= [CAout,Z];
+CFout(3,12172);
+Z1=zeros(3,985);
+CFout_New=[CFout,Z1];
+CGout(3,12078);
+Z2=zeros(3,94);
+CGout_New=[CGout,Z2];
+Z3=zeros(3,1831);
+CGout_New2=[CGout,Z3];
+CIout(3,13909);
+Z4=zeros(3,12245);
+CIout_New=[CIout,Z4];
 for k=0:1/8:1
-	B = (1-k)*CAout_New + k*D;
+	B = (1-k)*CAout_New + k*CDout;
     hb = axes('units','normalized', 'position',[0.2 0 0.5 0.5]);
     h_rr = plot(hb,B(1,:),B(2,:),'.');
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
@@ -397,7 +407,6 @@ end
 stop(player)   % Stop whenever you like...
 % >>>>>>> Stashed changes
 disp('script completed');
-
 %{
 ----------------------------------------------------------
 Functions below
