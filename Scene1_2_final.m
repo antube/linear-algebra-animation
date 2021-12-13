@@ -2,11 +2,10 @@
 SCENE 1 - Jake Kaplan
 %}
 
-%function [out_flag, ns1mtx, characterCenter1] = Scene1_2_final(~)
 %% Play background music throughout all scenes.
-[y,Fs] = audioread('ninja_music.wav');
-player = audioplayer(y,Fs);
-play(player)   % Start the music
+% [y,Fs] = audioread('ninja_music.wav');
+% player = audioplayer(y,Fs);
+% play(player)   % Start the music
 
 %% Create background image
 clf %This clears the figure, so remove this line if you want to preserve a plot you have already made
@@ -37,7 +36,7 @@ ns1mtx = [ns1mtx;ones(1,n)]; %Make the matrix 3x3 by adding a row of 1s
 S = [0.02 0 0; 0 0.02 0; 0 0 1];  %This is my rescaling matrix to shrink the character to fit the background
 ns1mtx = S*ns1mtx;
 ns1mtx_orig = ns1mtx;
-gif('Scene1_2_final.m.gif')
+gif('Scene1_2_final.m.gif') %This function is used to create a gif
 
 ninjaStarColor =[1, 1, 1];
 % import the throwing star sprite
@@ -394,6 +393,7 @@ for k=0:1/4:1
     hb = axes('units','normalized', 'position',[0.4 0 0.2 0.1]);
     h_rr = plot(hb,B(1,:),B(2,:),'.', 'color', ninjaColor, 'MarkerSize', 1);
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    gif
     pause(0.25)
     set(h_rr,'Visible','off')   
 end
@@ -402,6 +402,7 @@ for k=0:1/4:1
 	hb = axes('units','normalized', 'position',[0.4 0 0.2 0.1]);
     h_rr = plot(hb,B(1,:),B(2,:),'.', 'color', ninjaColor, 'MarkerSize', 1);
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    gif
     pause(0.25)
     set(h_rr,'Visible','off')   
 end
@@ -410,6 +411,7 @@ for k=0:1/4:1
 	hb = axes('units','normalized', 'position',[0.4 0 0.2 0.1]);
     h_rr = plot(hb,B(1,:),B(2,:),'.', 'color', ninjaColor, 'MarkerSize', 1);
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    gif
     pause(0.25)
     set(h_rr,'Visible','off')   
 end
@@ -418,6 +420,7 @@ for k=0:1/4:1
 	hb = axes('units','normalized', 'position',[0.4 0 0.2 0.1]);
     h_rr = plot(hb,B(1,:),B(2,:),'.', 'color', ninjaColor, 'MarkerSize', 1);
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    gif
     pause(0.25)
     set(h_rr,'Visible','off')    
 end
@@ -426,10 +429,11 @@ for k=0:1/4:1
 	hb = axes('units','normalized', 'position',[0.4 0 0.2 0.1]);
     h_rr = plot(hb,B(1,:),B(2,:),'.', 'color', ninjaColor, 'MarkerSize', 1);
     set(gca,'color','none','handlevisibility',axesVisible,'visible',axesVisible)
+    gif
     pause(0.25)
     set(h_rr,'Visible','off')   
 end
-stop(player)   % Stop the music after the animation is complete.
+%stop(player)   % Stop the music after the animation is complete.
 disp('script completed');
 %{
 ----------------------------------------------------------
