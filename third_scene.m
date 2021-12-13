@@ -9,7 +9,7 @@
 %       characterCenter: A vector representing the center of the charcter after the third scene is complete
 
 function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2] = third_scene(character, characterCenter, throwingStar1, throwingStar2, ninjaColor, axesVisible)
-    %gif('third_scene.m.gif');
+    %gif('third_scene.m.%gif');
     
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -203,7 +203,7 @@ function  [failureFlag, character, characterCenter, throwingStar1, throwingStar2
          throwingStar2 = throwingTransformation * throwingStar2;
          pause(0.05);
      
-        gif
+        %gif
 
          % perform final setup for the animation
          set(h_rr,'Visible','off')  % This line erases the image of the Road Runner and Wile E. Coyote
